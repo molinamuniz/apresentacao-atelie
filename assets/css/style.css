@@ -3,6 +3,8 @@
       --paper-soft: #efe6d8;
       --stone: #b0a090;
       --brown: #7a6248;
+  --wine: #451716;
+  --wine-texture: rgba(244, 239, 229, 0.16);
       --ink: #1c1510;
       --charcoal: #16120f;
       --line: rgba(28, 21, 16, 0.08);
@@ -24,7 +26,9 @@
 
     body {
       font-family: 'Montserrat', sans-serif;
-      background: var(--charcoal);
+      background-color: var(--wine);
+      background-image: radial-gradient(circle, var(--wine-texture) 1px, transparent 1px);
+      background-size: 22px 22px;
       color: var(--ink);
       overflow: hidden;
     }
@@ -73,6 +77,9 @@
       scroll-snap-align: start;
       scroll-snap-stop: always;
       overflow: hidden;
+      background-color: var(--wine);
+      background-image: radial-gradient(circle, var(--wine-texture) 1px, transparent 1px);
+      background-size: 22px 22px;
     }
 
     .slide--statement::before,
@@ -102,7 +109,9 @@
     }
 
     .slide--cover {
-      background: var(--charcoal);
+      background-color: var(--wine);
+      background-image: radial-gradient(circle, var(--wine-texture) 1px, transparent 1px);
+      background-size: 22px 22px;
       color: var(--white);
     }
 
@@ -204,9 +213,9 @@
     }
 
     .slide--statement {
-      background:
-        radial-gradient(circle at top right, rgba(122, 98, 72, 0.12), transparent 30%),
-        var(--paper);
+      background-color: var(--wine);
+      background-image: radial-gradient(circle, var(--wine-texture) 1px, transparent 1px);
+      background-size: 22px 22px;
       display: grid;
       align-items: center;
     }
@@ -299,13 +308,17 @@
     }
 
     .slide--project {
-      background: var(--paper);
+      background-color: var(--wine);
+      background-image: radial-gradient(circle, var(--wine-texture) 1px, transparent 1px);
+      background-size: 22px 22px;
       display: grid;
       align-items: center;
     }
 
     .slide--project.slide--project-alt {
-      background: linear-gradient(180deg, var(--paper-soft) 0%, var(--paper) 100%);
+      background-color: var(--wine);
+      background-image: radial-gradient(circle, var(--wine-texture) 1px, transparent 1px);
+      background-size: 22px 22px;
     }
 
     .project-number {
@@ -401,7 +414,9 @@
     }
 
     .slide--feature {
-      background: linear-gradient(180deg, #f6f1e8 0%, #f2eadf 100%);
+      background-color: var(--wine);
+      background-image: radial-gradient(circle, var(--wine-texture) 1px, transparent 1px);
+      background-size: 22px 22px;
       display: grid;
       align-items: center;
     }
@@ -551,9 +566,9 @@
     }
 
     .slide--academic {
-      background:
-        radial-gradient(circle at top right, rgba(122, 98, 72, 0.14), transparent 34%),
-        linear-gradient(180deg, #f5eee3 0%, #efe5d7 100%);
+      background-color: var(--wine);
+      background-image: radial-gradient(circle, var(--wine-texture) 1px, transparent 1px);
+      background-size: 22px 22px;
       display: grid;
       align-items: center;
     }
@@ -733,10 +748,9 @@
     }
 
     .slide--closing {
-      background:
-        radial-gradient(circle at top right, rgba(122, 98, 72, 0.15), transparent 36%),
-        radial-gradient(circle at bottom left, rgba(176, 160, 144, 0.12), transparent 42%),
-        linear-gradient(180deg, #f5eee3 0%, #efe5d7 100%);
+      background-color: var(--wine);
+      background-image: radial-gradient(circle, var(--wine-texture) 1px, transparent 1px);
+      background-size: 22px 22px;
       color: var(--ink);
       display: grid;
       align-items: center;
@@ -805,10 +819,9 @@
     }
 
     .slide--contact {
-      background:
-        radial-gradient(circle at top left, rgba(122, 98, 72, 0.16), transparent 38%),
-        radial-gradient(circle at bottom right, rgba(176, 160, 144, 0.16), transparent 44%),
-        linear-gradient(180deg, #f6efe4 0%, #efe3d3 100%);
+      background-color: var(--wine);
+      background-image: radial-gradient(circle, var(--wine-texture) 1px, transparent 1px);
+      background-size: 22px 22px;
       color: var(--ink);
       display: grid;
       align-items: center;

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ateliê V · 3ª Entrega · Projeto Humanizado</title>
+  <title>Ateliê V · Projeto Humanizado</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&family=Poiret+One&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
       justify-content: center;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #5C2120 0%, #5C2120 100%);
+      background: linear-gradient(135deg, #451716 0%, #451716 100%);
     }
 
     .img-ph::after {
@@ -46,7 +46,7 @@
 
     /* Preview cards: fundo sutil */
     .preview-card .img-ph {
-      background: linear-gradient(160deg, #d4cbc0 0%, #5C2120 100%);
+      background: linear-gradient(160deg, #d4cbc0 0%, #451716 100%);
     }
 
     .real-image {
@@ -85,11 +85,15 @@
       padding: clamp(3.8rem, 6vh, 5rem) 4vw clamp(2.8rem, 5vh, 4rem);
       color: #1c1510;
       overflow: hidden;
-      background:
-        linear-gradient(rgba(92, 33, 32, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(92, 33, 32, 0.035) 1px, transparent 1px),
-        #f3eee5;
-      background-size: 91px 91px;
+      background-color: #4d2020;
+      background-image: radial-gradient(circle, rgba(244, 239, 229, 0.16) 1px, transparent 1px);
+      background-size: 22px 22px;
+    }
+
+    .slide--moodboard {
+      background-color: #451716;
+      background-image: radial-gradient(circle, rgba(244, 239, 229, 0.16) 1px, transparent 1px);
+      background-size: 22px 22px;
     }
 
     .slide--plan .feature-shell {
@@ -167,7 +171,9 @@
       width: 100%;
       height: 100%;
       padding: 1.5rem;
-      background: linear-gradient(150deg, #f0ebe2 0%, #e6dccd 100%);
+      background-color: #4d2020;
+      background-image: radial-gradient(circle, rgba(244, 239, 229, 0.16) 1px, transparent 1px);
+      background-size: 22px 22px;
     }
 
     .wall--dense {
@@ -178,6 +184,11 @@
 
     .wall--three-by-two {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .wall:not(.wall--dense):not(.wall--two-by-two):not(.wall--single) > .wall-item:nth-last-child(2):nth-child(3n + 1),
+    .wall:not(.wall--dense):not(.wall--two-by-two):not(.wall--single) > .wall-item:last-child:nth-child(3n + 2) {
+      transform: translateX(calc(50% + 0.5rem));
     }
 
     .wall--two-by-two {
@@ -199,7 +210,7 @@
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 10px 30px rgba(28, 21, 16, 0.16);
-      background: #c9b8a7;
+      background: #4d2020;
     }
 
     .wall-item figcaption {
@@ -275,7 +286,9 @@
       width: 100%;
       height: 100%;
       padding: 2rem;
-      background: linear-gradient(140deg, #ece4d8 0%, #d9cdbf 100%);
+      background-color: #4d2020;
+      background-image: radial-gradient(circle, rgba(244, 239, 229, 0.16) 1px, transparent 1px);
+      background-size: 22px 22px;
     }
 
     .sector-cover__media {
@@ -283,7 +296,7 @@
       overflow: hidden;
       box-shadow: 0 14px 30px rgba(28, 21, 16, 0.14);
       min-height: 0;
-      background: #d6cebc;
+      background: #4d2020;
     }
 
     .sector-cover__copy {
@@ -338,6 +351,58 @@
       font-family: 'Poiret One', sans-serif !important;
       font-weight: 400 !important;
     }
+
+    /* ── Cover gallery carousel ─────────────────────────────────── */
+    .cover-gallery {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .cover-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1000ms ease-in-out;
+    }
+
+  
+    .cover-frame.active {
+      opacity: 1;
+    }
+
+    .cover-frame .real-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cover-veil {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(45, 37, 32, 0.72) 0%, rgba(28, 21, 16, 0.56) 100%);
+      z-index: 1;
+    }
+
+    .cover-body {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
   </style>
 </head>
 <body>
@@ -363,20 +428,26 @@
     <section class="slide slide--cover" data-light="false" data-title="Capa" id="s0">
       <div class="cover-gallery" aria-hidden="true">
         <div class="cover-frame active">
-          <div class="img-ph" data-label="[Imagem de capa]"></div>
+          <img class="real-image" src="Slides/SETORES/FACHADA/FACHADA 01.png" alt="Fachada 01">
+        </div>
+        <div class="cover-frame">
+          <img class="real-image" src="Slides/SETORES/FACHADA/FACHADA 06.png" alt="Fachada 06">
+        </div>
+        <div class="cover-frame">
+          <img class="real-image" src="Slides/SETORES/FACHADA/VIVENCIAS 02.png" alt="Vivências 02">
         </div>
       </div>
       <div class="cover-veil"></div>
 
       <div class="cover-body">
-        <span class="cover-kicker">Ateliê V · 3ª Entrega · 10/06/2026</span>
+        <span class="cover-kicker">Ateliê V · 10/06/2026</span>
         <h1 class="cover-title" style="white-space:nowrap;font-size:clamp(36px,5.5vw,96px);letter-spacing:0.12em;">Maternidade Origem</h1>
         <p class="cover-lead">
           ORIENTADO POR: CLÓVIS AQUINO, ERICA COELHO, PRISCILA LOUREIRO
         </p>
         <div class="cover-rule"></div>
         <div class="cover-meta">
-          <span>PROJETADO POR: EMANUELLY FERREIRA</span>
+          <span>EMANUELLY FERREIRA</span>
           <span>KAROLAINE KOHLER</span>
           <span>MARIANA GOTTARDO</span>
         </div>
@@ -386,7 +457,7 @@
     <!-- ════════════════════════════════════════════════════════════
          SLIDE 01 · MOODBOARD & REFERÊNCIAS PROJETUAIS
     ════════════════════════════════════════════════════════════ -->
-    <section class="slide slide--moodboard" data-light="true" data-title="Moodboard" id="s1" style="padding:0;background:#D6CEBC;">
+    <section class="slide slide--moodboard" data-light="true" data-title="Moodboard" id="s1" style="padding:0;">
       <iframe
         src="moodboard.html"
         title="Moodboard · Referências Projetuais"
@@ -399,7 +470,7 @@
     <!-- ════════════════════════════════════════════════════════════
          SLIDE 02 · MOODBOARD 2 — INTERIORES E MATERIALIDADE
     ════════════════════════════════════════════════════════════ -->
-    <section class="slide slide--moodboard" data-light="true" data-title="Moodboard 2" id="s2" style="padding:0;background:#CEC1B4;">
+    <section class="slide slide--moodboard" data-light="true" data-title="Moodboard 2" id="s2" style="padding:0;">
       <iframe
         src="moodboard2.html"
         title="Moodboard 2 · Interiores e Materialidade"
@@ -412,7 +483,7 @@
     <!-- ════════════════════════════════════════════════════════════
          SLIDE 03 · MOODBOARD 3 — PAISAGISMO
     ════════════════════════════════════════════════════════════ -->
-    <section class="slide slide--moodboard" data-light="true" data-title="Moodboard Paisagismo" id="s3" style="padding:0;background:#C7D0C3;">
+    <section class="slide slide--moodboard" data-light="true" data-title="Moodboard Paisagismo" id="s3" style="padding:0;">
       <iframe
         src="moodboard3.html"
         title="Moodboard 3 · Paisagismo"
@@ -425,7 +496,7 @@
     <!-- ════════════════════════════════════════════════════════════
          SLIDE 04 · MOODBOARD 4 — FACHADA
     ════════════════════════════════════════════════════════════ -->
-    <section class="slide slide--moodboard" data-light="true" data-title="Moodboard Fachada" id="s4" style="padding:0;background:#D3C6B8;">
+    <section class="slide slide--moodboard" data-light="true" data-title="Moodboard Fachada" id="s4" style="padding:0;">
       <iframe
         src="moodboard4.html"
         title="Moodboard 4 · Fachada"
@@ -525,7 +596,7 @@
     <!-- SLIDE 10 · IMAGENS SETOR 01 (EXEMPLAR) -->
     <section class="slide" data-light="true" data-title="Setor 01 · Imagens · Exemplar" id="s9">
       <div class="wall wall--single" aria-label="Render exemplar do setor de recepção e admissão">
-        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/ADMISSÃO 01.png" alt="Render exemplar de admissão"><figcaption>Admissão</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/RECEPÇÃO PRINCIPAL 02.png" alt="Render exemplar de recepção principal"><figcaption>Recepção principal</figcaption></figure>
       </div>
       <span class="slide-no">Setor 01 / Exemplar</span>
     </section>
@@ -533,9 +604,9 @@
     <!-- SLIDE 10B · IMAGENS SETOR 01 (RESTANTE PAR) -->
     <section class="slide" data-light="true" data-title="Setor 01 · Imagens · Complementares" id="s9b">
       <div class="wall wall--three-by-two" aria-label="Renders complementares do setor de recepção e admissão">
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/ADMISSÃO 01.png" alt="Render de admissão 01"><figcaption>Admissão</figcaption></figure>
         <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/ADMISSÃO 02.png" alt="Render de admissão 02"><figcaption>Admissão</figcaption></figure>
-        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/RECEPÇÃO PRINCIPAL 01.png" alt="Render de recepção principal 01"><figcaption>Recepção principal</figcaption></figure>
-        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/RECEPÇÃO PRINCIPAL 02.png" alt="Render de recepção principal 02"><figcaption>Recepção principal</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/RECEPÇÃO PRINCIPAL 01.png" alt="Render de recepção principal 02"><figcaption>Recepção principal</figcaption></figure>
         <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/RECEPÇÃO PRINCIPAL 03.png" alt="Render de recepção principal 03"><figcaption>Recepção principal</figcaption></figure>
         <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/RECEPÇÃO PRINCIPAL 04.png" alt="Render de recepção principal 04"><figcaption>Recepção principal</figcaption></figure>
         <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/RECEPÇÃO PRINCIPAL 05.png" alt="Render de recepção principal 05"><figcaption>Recepção principal</figcaption></figure>
@@ -781,6 +852,28 @@
       });
 
       observer.observe(lightboxImage, { attributes: true, attributeFilter: ['src'] });
+    })();
+
+    (function () {
+      var frames = document.querySelectorAll('.cover-frame');
+      if (frames.length <= 1) {
+        return;
+      }
+
+      var currentIndex = 0;
+
+      function showFrame(index) {
+        frames.forEach(function (frame, i) {
+          frame.classList.toggle('active', i === index);
+        });
+      }
+
+      function nextFrame() {
+        currentIndex = (currentIndex + 1) % frames.length;
+        showFrame(currentIndex);
+      }
+
+      setInterval(nextFrame, 4000);
     })();
   </script>
   <script src="assets/js/main.js"></script>
