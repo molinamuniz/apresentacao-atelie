@@ -39,7 +39,7 @@
     body {
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       padding: clamp(8px, 0.9vh, 14px) clamp(8px, 0.9vw, 14px);
     }
 
@@ -52,7 +52,7 @@
       border: 1px solid rgba(123, 87, 67, 0.24);
       box-shadow: 0 6px 24px rgba(37, 20, 12, 0.18);
       display: grid;
-      grid-template-rows: 11% 41% 42% 6%;
+      grid-template-rows: auto minmax(0, 2.15fr) minmax(0, 2.35fr) auto;
       gap: var(--gap);
       padding: clamp(10px, 0.95vw, 16px);
     }
@@ -78,7 +78,7 @@
       margin: 0;
       font-family: var(--serif);
       font-size: clamp(32px, 2.6vw, 44px);
-      line-height: 0.9;
+      line-height: 0.95;
       letter-spacing: 0.02em;
       font-weight: 400;
     }
@@ -94,6 +94,10 @@
       text-align: right;
       padding-left: 16px;
       max-width: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-end;
     }
 
     .meta .kicker {
@@ -108,10 +112,11 @@
     .meta .value {
       font-family: var(--serif);
       font-size: clamp(20px, 1.5vw, 28px);
-      line-height: 0.95;
+      line-height: 1.08;
       font-style: italic;
       color: var(--text-dark);
       display: block;
+      white-space: nowrap;
     }
 
     .main-grid {
@@ -219,7 +224,7 @@
       display: grid;
       grid-template-columns: 1fr 1.5fr;
       gap: 10px;
-      align-items: baseline;
+      align-items: center;
       padding: 5px 8px 4px;
       border-bottom: 1px solid rgba(122, 85, 66, 0.34);
       background: linear-gradient(180deg, #f6efe7 0%, #efe5db 100%);
@@ -362,6 +367,116 @@
       background: linear-gradient(90deg, rgba(122, 45, 46, 0.05), rgba(122, 45, 46, 0.68), rgba(122, 45, 46, 0.05));
     }
 
+    .zoomable {
+      cursor: zoom-in;
+    }
+
+    #mb-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      display: none;
+    }
+
+    #mb-lightbox.open {
+      display: block;
+    }
+
+    #mb-lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(13, 10, 8, 0.88);
+      backdrop-filter: blur(5px);
+    }
+
+    #mb-lightbox-panel {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    #mb-lightbox-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px 0;
+    }
+
+    #mb-lightbox-meta {
+      font-size: 0.56rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(248, 243, 236, 0.78);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #mb-lightbox-close {
+      border: 1px solid rgba(248, 243, 236, 0.24);
+      background: rgba(248, 243, 236, 0.1);
+      color: rgba(248, 243, 236, 0.92);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.56rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    #mb-lightbox-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 18px 70px 30px;
+    }
+
+    #mb-lightbox-image {
+      max-width: min(92vw, 1700px);
+      max-height: calc(100dvh - 110px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    }
+
+    .mb-lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(248, 243, 236, 0.28);
+      background: rgba(27, 21, 17, 0.6);
+      color: rgba(248, 243, 236, 0.92);
+      font-size: 1.9rem;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    #mb-lightbox-prev {
+      left: 14px;
+    }
+
+    #mb-lightbox-next {
+      right: 14px;
+    }
+
+    .mb-lightbox-nav[hidden] {
+      display: none;
+    }
+
+    body.lightbox-open {
+      overflow: hidden;
+    }
+
     @media (max-width: 900px) {
       html, body { overflow: auto; }
       body { padding: 10px; }
@@ -391,7 +506,7 @@
       </div>
     </header>
 
-    <section class="main-grid" aria-label="Referencias visuais">
+    <section class="main-grid" aria-label="Referencias visuais" data-lightbox-gallery>
       <article class="cell cell-1">
         <img src="Moodboard 2/WhatsApp Image 2026-06-07 at 02.jpeg" alt="Recepcao wellness com painel ripado curvo">
         <span class="badge">01</span>
@@ -415,7 +530,7 @@
     </section>
 
     <section class="bottom" aria-label="Material e especificacoes">
-      <aside class="material" aria-label="Amostra de material">
+      <aside class="material" aria-label="Amostra de material" data-lightbox-gallery>
         <div class="panel-head">Amostra de material</div>
         <figure>
           <img src="Moodboard 2/d7d866a512ab6f4c3e6a5b67264c0b4c.jpg" alt="Textura terracota e iluminacao linear">
@@ -515,5 +630,102 @@
       <span class="txt">Moodboard 2 - Interiores</span>
     </footer>
   </article>
+
+  <div id="mb-lightbox" aria-hidden="true" role="dialog" aria-label="Visualizador de imagem do moodboard">
+    <div id="mb-lightbox-backdrop"></div>
+    <div id="mb-lightbox-panel">
+      <div id="mb-lightbox-toolbar">
+        <div id="mb-lightbox-meta"></div>
+        <button id="mb-lightbox-close" type="button" aria-label="Fechar visualizador">Fechar</button>
+      </div>
+      <div id="mb-lightbox-stage">
+        <button id="mb-lightbox-prev" class="mb-lightbox-nav" type="button" aria-label="Imagem anterior">‹</button>
+        <img id="mb-lightbox-image" src="" alt="">
+        <button id="mb-lightbox-next" class="mb-lightbox-nav" type="button" aria-label="Próxima imagem">›</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const galleryGroups = Array.from(document.querySelectorAll('[data-lightbox-gallery]'));
+      const galleryImages = galleryGroups.flatMap((group) => Array.from(group.querySelectorAll('img')));
+      if (galleryImages.length === 0) {
+        return;
+      }
+
+      const lightboxRoot = document.getElementById('mb-lightbox');
+      const lightboxBackdrop = document.getElementById('mb-lightbox-backdrop');
+      const lightboxClose = document.getElementById('mb-lightbox-close');
+      const lightboxImage = document.getElementById('mb-lightbox-image');
+      const lightboxMeta = document.getElementById('mb-lightbox-meta');
+      const lightboxPrev = document.getElementById('mb-lightbox-prev');
+      const lightboxNext = document.getElementById('mb-lightbox-next');
+      let currentIndex = 0;
+
+      function updateNavVisibility() {
+        const hasMultiple = galleryImages.length > 1;
+        lightboxPrev.hidden = !hasMultiple;
+        lightboxNext.hidden = !hasMultiple;
+      }
+
+      function renderImage(index) {
+        const totalImages = galleryImages.length;
+        currentIndex = (index + totalImages) % totalImages;
+        const sourceImage = galleryImages[currentIndex];
+        lightboxImage.src = sourceImage.currentSrc || sourceImage.getAttribute('src') || '';
+        lightboxImage.alt = sourceImage.alt || 'Imagem ampliada';
+        lightboxMeta.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(totalImages).padStart(2, '0')} - ${lightboxImage.alt}`;
+      }
+
+      function openLightbox(index) {
+        updateNavVisibility();
+        renderImage(index);
+        lightboxRoot.classList.add('open');
+        lightboxRoot.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('lightbox-open');
+      }
+
+      function closeLightbox() {
+        lightboxRoot.classList.remove('open');
+        lightboxRoot.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('lightbox-open');
+        lightboxImage.src = '';
+        lightboxImage.alt = '';
+        lightboxMeta.textContent = '';
+      }
+
+      galleryImages.forEach((image, index) => {
+        image.classList.add('zoomable');
+        image.tabIndex = 0;
+        image.addEventListener('click', () => openLightbox(index));
+        image.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openLightbox(index);
+          }
+        });
+      });
+
+      lightboxPrev.addEventListener('click', () => renderImage(currentIndex - 1));
+      lightboxNext.addEventListener('click', () => renderImage(currentIndex + 1));
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightboxBackdrop.addEventListener('click', closeLightbox);
+
+      document.addEventListener('keydown', (event) => {
+        if (!lightboxRoot.classList.contains('open')) {
+          return;
+        }
+
+        if (event.key === 'Escape') {
+          closeLightbox();
+        } else if (event.key === 'ArrowLeft') {
+          renderImage(currentIndex - 1);
+        } else if (event.key === 'ArrowRight') {
+          renderImage(currentIndex + 1);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

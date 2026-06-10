@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moodboard 3 - Paisagismo - Atelie V</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --board-bg: #c7d0c3;
+      --paper-bg: #f4f0e7;
+      --line: #9ca98f;
+      --text-dark: #283022;
+      --text-mid: #5f6f52;
+      --text-soft: #7d8b72;
+      --accent: #4c6b47;
+      --gap: clamp(4px, 0.45vw, 8px);
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Montserrat', system-ui, sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--board-bg);
+      background-image: radial-gradient(circle, rgba(67, 84, 57, 0.18) 1px, transparent 1px);
+      background-size: 20px 20px;
+      font-family: var(--sans);
+      color: var(--text-dark);
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: clamp(8px, 0.9vh, 14px) clamp(8px, 0.9vw, 14px);
+    }
+
+    .board {
+      width: 95%;
+      max-width: 1440px;
+      height: 100%;
+      max-height: 900px;
+      background: var(--paper-bg);
+      border: 1px solid rgba(88, 107, 78, 0.24);
+      box-shadow: 0 6px 24px rgba(34, 43, 28, 0.18);
+      display: grid;
+      grid-template-rows: auto minmax(0, 2.05fr) minmax(0, 2.45fr) auto;
+      gap: var(--gap);
+      padding: clamp(10px, 0.95vw, 16px);
+    }
+
+    .header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: clamp(6px, 0.8vh, 10px);
+      min-height: 0;
+    }
+
+    .eyebrow {
+      font-size: clamp(9px, 0.62vw, 11px);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: clamp(2px, 0.35vh, 5px);
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(32px, 2.6vw, 44px);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      font-weight: 400;
+    }
+
+    .title em {
+      font-style: italic;
+      font-weight: 400;
+      display: block;
+      margin-top: 2px;
+    }
+
+    .meta {
+      text-align: right;
+      padding-left: 16px;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+
+    .meta .kicker {
+      font-size: clamp(9px, 0.62vw, 11px);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .meta .value {
+      font-family: var(--serif);
+      font-size: clamp(20px, 1.5vw, 28px);
+      line-height: 1.08;
+      font-style: italic;
+      color: var(--text-dark);
+      display: block;
+      white-space: nowrap;
+    }
+
+    .main-grid {
+      min-height: 0;
+      display: grid;
+      gap: var(--gap);
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 0.9fr) minmax(0, 1.2fr);
+      grid-template-rows: 1fr;
+    }
+
+    .cell {
+      position: relative;
+      overflow: hidden;
+      background: #c4ccb8;
+      border: 1px solid rgba(92, 115, 82, 0.22);
+      min-height: 0;
+    }
+
+    .cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 360ms ease;
+    }
+
+    .cell:hover img {
+      transform: scale(1.03);
+    }
+
+    .cell--plan {
+      background: #e2e8d7;
+    }
+
+    .cell--plan img {
+      object-fit: contain;
+      object-position: center center;
+    }
+
+    .cell--plan:hover img {
+      transform: none;
+    }
+
+    .badge {
+      position: absolute;
+      top: 7px;
+      left: 7px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(244, 240, 231, 0.92);
+      color: var(--text-dark);
+      font-size: 10px;
+      font-weight: 600;
+      display: grid;
+      place-items: center;
+    }
+
+    .cell-label {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 8px 10px;
+      font-size: clamp(9px, 0.62vw, 11px);
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: #f7f5ef;
+      background: linear-gradient(180deg, rgba(27, 33, 24, 0) 0%, rgba(27, 33, 24, 0.74) 100%);
+    }
+
+    .bottom {
+      min-height: 0;
+      display: grid;
+      gap: var(--gap);
+      grid-template-columns: 1.05fr 1.15fr;
+    }
+
+    .species-panel,
+    .legend-text {
+      border: 1px solid var(--line);
+      background: #eef1e8;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .species-panel {
+      padding: 10px 12px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 8px;
+      background: #edf2e8;
+    }
+
+    .species-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      overflow: auto;
+      padding-right: 4px;
+      align-content: start;
+    }
+
+    .species-card {
+      border: 1px solid rgba(96, 118, 84, 0.28);
+      background: #f4f7f1;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 8px;
+      align-items: center;
+      padding: 8px;
+      min-height: 64px;
+    }
+
+    .species-thumb {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      border: 1px solid rgba(76, 107, 71, 0.25);
+      object-fit: cover;
+      display: block;
+      background: #dce8d3;
+    }
+
+    .species-copy {
+      min-width: 0;
+    }
+
+    .species-code {
+      font-size: clamp(10px, 0.66vw, 12px);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #3e5a39;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .species-name {
+      margin: 2px 0 0;
+      font-size: clamp(10px, 0.68vw, 12px);
+      color: #33402d;
+      line-height: 1.2;
+    }
+
+    .legend-text {
+      padding: 10px 12px;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 8px;
+      background: #f2f4ee;
+    }
+
+    .panel-head {
+      font-size: clamp(9px, 0.62vw, 11px);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      font-weight: 600;
+    }
+
+    .text-scroll {
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .group {
+      margin-bottom: 9px;
+      border-left: 2px solid rgba(76, 107, 71, 0.34);
+      padding-left: 8px;
+    }
+
+    .group:last-child {
+      margin-bottom: 0;
+    }
+
+    .group h3 {
+      margin: 0 0 5px;
+      font-size: clamp(10px, 0.68vw, 12px);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #3d5035;
+      font-weight: 600;
+    }
+
+    .group p {
+      margin: 2px 0;
+      font-size: clamp(10px, 0.7vw, 12px);
+      line-height: 1.34;
+      color: #384431;
+    }
+
+    .group em {
+      font-family: var(--serif);
+      font-size: 1.02em;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 0;
+      padding-top: 4px;
+    }
+
+    .footer .txt {
+      color: var(--text-soft);
+      font-size: clamp(8px, 0.54vw, 10px);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .footer .line {
+      height: 1px;
+      background: linear-gradient(90deg, rgba(76, 107, 71, 0.05), rgba(76, 107, 71, 0.68), rgba(76, 107, 71, 0.05));
+    }
+    
+    .zoomable {
+      cursor: zoom-in;
+    }
+    
+    #mb-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      display: none;
+    }
+    
+    #mb-lightbox.open {
+      display: block;
+    }
+    
+    #mb-lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(13, 10, 8, 0.88);
+      backdrop-filter: blur(5px);
+    }
+    
+    #mb-lightbox-panel {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+    
+    #mb-lightbox-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px 0;
+    }
+    
+    #mb-lightbox-meta {
+      font-size: 0.56rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(248, 243, 236, 0.78);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    #mb-lightbox-close {
+      border: 1px solid rgba(248, 243, 236, 0.24);
+      background: rgba(248, 243, 236, 0.1);
+      color: rgba(248, 243, 236, 0.92);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.56rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    
+    #mb-lightbox-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 18px 70px 30px;
+    }
+    
+    #mb-lightbox-image {
+      max-width: min(92vw, 1700px);
+      max-height: calc(100dvh - 110px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    }
+    
+    .mb-lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(248, 243, 236, 0.28);
+      background: rgba(27, 21, 17, 0.6);
+      color: rgba(248, 243, 236, 0.92);
+      font-size: 1.9rem;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    
+    #mb-lightbox-prev {
+      left: 14px;
+    }
+    
+    #mb-lightbox-next {
+      right: 14px;
+    }
+    
+    .mb-lightbox-nav[hidden] {
+      display: none;
+    }
+    
+    body.lightbox-open {
+      overflow: hidden;
+    }
+
+    .zoomable {
+      cursor: zoom-in;
+    }
+
+    #mb-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      display: none;
+    }
+
+    #mb-lightbox.open {
+      display: block;
+    }
+
+    #mb-lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(13, 10, 8, 0.88);
+      backdrop-filter: blur(5px);
+    }
+
+    #mb-lightbox-panel {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    #mb-lightbox-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px 0;
+    }
+
+    #mb-lightbox-meta {
+      font-size: 0.56rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(248, 243, 236, 0.78);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #mb-lightbox-close {
+      border: 1px solid rgba(248, 243, 236, 0.24);
+      background: rgba(248, 243, 236, 0.1);
+      color: rgba(248, 243, 236, 0.92);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.56rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    #mb-lightbox-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 18px 70px 30px;
+    }
+
+    #mb-lightbox-image {
+      max-width: min(92vw, 1700px);
+      max-height: calc(100dvh - 110px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    }
+
+    .mb-lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(248, 243, 236, 0.28);
+      background: rgba(27, 21, 17, 0.6);
+      color: rgba(248, 243, 236, 0.92);
+      font-size: 1.9rem;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    #mb-lightbox-prev {
+      left: 14px;
+    }
+
+    #mb-lightbox-next {
+      right: 14px;
+    }
+
+    .mb-lightbox-nav[hidden] {
+      display: none;
+    }
+
+    body.lightbox-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 900px) {
+      html, body { overflow: auto; }
+      body { padding: 10px; }
+      .board {
+        width: min(1200px, 100%);
+        height: auto;
+        min-height: 920px;
+        grid-template-rows: auto auto auto auto;
+      }
+      .main-grid { grid-template-columns: 1fr; grid-template-rows: repeat(3, minmax(200px, 30vh)); }
+      .bottom { grid-template-columns: 1fr; }
+      .species-panel { min-height: 320px; }
+      .species-grid { grid-template-columns: 1fr; }
+      .text-scroll { max-height: 340px; }
+    }
+  </style>
+</head>
+<body>
+  <article class="board">
+    <header class="header">
+      <div class="title">
+        <div class="eyebrow">Maternidade Origem - Atelie V</div>
+        <h1>Moodboard 3 <em>Paisagismo</em></h1>
+      </div>
+      <div class="meta">
+        <span class="kicker">Diretriz de Paisagismo</span>
+        <span class="value">Biofilia Curvas Vegetação Nativa</span>
+      </div>
+    </header>
+
+    <section class="main-grid" aria-label="Referencias visuais de paisagismo" data-lightbox-gallery>
+      <article class="cell">
+        <img src="Slides/03 - MOODBOARD/download (1).jpg" alt="Patio com arvore central, espelho d'agua e estar externo">
+        <span class="badge">01</span>
+        <span class="cell-label">Patio de convivencia com espelho d'agua</span>
+      </article>
+      <article class="cell">
+        <img src="Slides/03 - MOODBOARD/download.jpg" alt="Praca interna com canteiros curvos e arborizacao de sombra">
+        <span class="badge">02</span>
+        <span class="cell-label">Canteiros organicos e sombra arborea</span>
+      </article>
+      <article class="cell cell--plan">
+        <img src="Slides/03 - MOODBOARD/Gemini_Generated_Image_59q9ho59q9ho59q9.png" alt="Planta humanizada com patios verdes e distribuicao de usos">
+        <span class="badge">03</span>
+        <span class="cell-label">Planta humanizada com nucleos verdes</span>
+      </article>
+    </section>
+
+    <section class="bottom" aria-label="Espécies e legenda de vegetação">
+      <aside class="species-panel" aria-label="Fichas visuais das espécies">
+        <div class="panel-head">Fichas visuais das espécies</div>
+        <div class="species-grid">
+          <article class="species-card">
+            <img class="species-thumb" src="assets/icons/species/veg1-grama-esmeralda.svg" alt="Ícone da espécie VEG1 - Grama-esmeralda">
+            <div class="species-copy"><p class="species-code">VEG1</p><p class="species-name">Grama-esmeralda</p></div>
+          </article>
+          <article class="species-card">
+            <img class="species-thumb" src="assets/icons/species/veg2-azaleia.svg" alt="Ícone da espécie VEG2 - Azaleia">
+            <div class="species-copy"><p class="species-code">VEG2</p><p class="species-name">Azaleia</p></div>
+          </article>
+          <article class="species-card">
+            <img class="species-thumb" src="assets/icons/species/veg3-lavanda.svg" alt="Ícone da espécie VEG3 - Lavanda">
+            <div class="species-copy"><p class="species-code">VEG3</p><p class="species-name">Lavanda</p></div>
+          </article>
+          <article class="species-card">
+            <img class="species-thumb" src="assets/icons/species/veg4-salvia.svg" alt="Ícone da espécie VEG4 - Sálvia">
+            <div class="species-copy"><p class="species-code">VEG4</p><p class="species-name">Sálvia</p></div>
+          </article>
+          <article class="species-card">
+            <img class="species-thumb" src="assets/icons/species/veg5-hibisco.svg" alt="Ícone da espécie VEG5 - Hibisco">
+            <div class="species-copy"><p class="species-code">VEG5</p><p class="species-name">Hibisco</p></div>
+          </article>
+          <article class="species-card">
+            <img class="species-thumb" src="assets/icons/species/veg6-pleomele.svg" alt="Ícone da espécie VEG6 - Pleomele">
+            <div class="species-copy"><p class="species-code">VEG6</p><p class="species-name">Pleomele</p></div>
+          </article>
+          <article class="species-card">
+            <img class="species-thumb" src="assets/icons/species/veg7-extremosa.svg" alt="Ícone da espécie VEG7 - Extremosa">
+            <div class="species-copy"><p class="species-code">VEG7</p><p class="species-name">Extremosa</p></div>
+          </article>
+          <article class="species-card">
+            <img class="species-thumb" src="assets/icons/species/veg8-ipe-roxo.svg" alt="Ícone da espécie VEG8 - Ipê-roxo">
+            <div class="species-copy"><p class="species-code">VEG8</p><p class="species-name">Ipê-roxo</p></div>
+          </article>
+        </div>
+      </aside>
+
+      <article class="legend-text">
+        <div class="panel-head">Transcrição da legenda de vegetação</div>
+        <div class="text-scroll">
+          <section class="group">
+            <h3>Coberturas e gramados</h3>
+            <p>VEG1 - <em>Wild zoysia</em> - Grama-esmeralda - Em placa - Gramado rústico, baixa manutenção e alta resistência ao pisoteio.</p>
+            <p>VEG2 - <em>Rhododendron indicum</em> - Azaleia - 80 cm - Cor da flor rosa. Floração no inverno e início da primavera.</p>
+          </section>
+
+          <section class="group">
+            <h3>Arbustos e flores</h3>
+            <p>VEG3 - <em>Lavandula angustifolia</em> - Lavanda - 60 cm - Aromática e medicinal. Atrai polinizadores e possui efeito calmante.</p>
+            <p>VEG4 - <em>Salvia officinalis</em> - Sálvia - 50 cm - Aromática, folhagem acinzentada e flores roxas.</p>
+            <p>VEG5 - <em>Hibiscus rosa-sinensis</em> - Hibisco - 100 cm - Flores grandes e vibrantes. Floração na primavera e verão.</p>
+            <p>VEG6 - <em>Pleomele reflexa</em> - Pleomele - 80 cm - Folhagem ornamental, resistente e ideal para maciços.</p>
+          </section>
+
+          <section class="group">
+            <h3>Árvores de porte médio</h3>
+            <p>VEG7 - <em>Lagerstroemia indica</em> - Extremosa - 3-5 m - Floração abundante no verão. Atrai pássaros e embeleza o ambiente.</p>
+            <p>VEG8 - <em>Handroanthus impetiginosus</em> - Ipê-roxo - 4-8 m - Floração no inverno. Símbolo da flora brasileira, valor ornamental elevado.</p>
+          </section>
+        </div>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <span class="txt">Atelie V - Projeto Humanizado - Junho 2026</span>
+      <span class="line"></span>
+      <span class="txt">Moodboard 3 - Paisagismo</span>
+    </footer>
+  </article>
+
+  <div id="mb-lightbox" aria-hidden="true" role="dialog" aria-label="Visualizador de imagem do moodboard">
+    <div id="mb-lightbox-backdrop"></div>
+    <div id="mb-lightbox-panel">
+      <div id="mb-lightbox-toolbar">
+        <div id="mb-lightbox-meta"></div>
+        <button id="mb-lightbox-close" type="button" aria-label="Fechar visualizador">Fechar</button>
+      </div>
+      <div id="mb-lightbox-stage">
+        <button id="mb-lightbox-prev" class="mb-lightbox-nav" type="button" aria-label="Imagem anterior">‹</button>
+        <img id="mb-lightbox-image" src="" alt="">
+        <button id="mb-lightbox-next" class="mb-lightbox-nav" type="button" aria-label="Próxima imagem">›</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const galleryGroups = Array.from(document.querySelectorAll('[data-lightbox-gallery]'));
+      const galleryImages = galleryGroups.flatMap((group) => Array.from(group.querySelectorAll('img')));
+      if (galleryImages.length === 0) {
+        return;
+      }
+
+      const lightboxRoot = document.getElementById('mb-lightbox');
+      const lightboxBackdrop = document.getElementById('mb-lightbox-backdrop');
+      const lightboxClose = document.getElementById('mb-lightbox-close');
+      const lightboxImage = document.getElementById('mb-lightbox-image');
+      const lightboxMeta = document.getElementById('mb-lightbox-meta');
+      const lightboxPrev = document.getElementById('mb-lightbox-prev');
+      const lightboxNext = document.getElementById('mb-lightbox-next');
+      let currentIndex = 0;
+
+      function updateNavVisibility() {
+        const hasMultiple = galleryImages.length > 1;
+        lightboxPrev.hidden = !hasMultiple;
+        lightboxNext.hidden = !hasMultiple;
+      }
+
+      function renderImage(index) {
+        const totalImages = galleryImages.length;
+        currentIndex = (index + totalImages) % totalImages;
+        const sourceImage = galleryImages[currentIndex];
+        lightboxImage.src = sourceImage.currentSrc || sourceImage.getAttribute('src') || '';
+        lightboxImage.alt = sourceImage.alt || 'Imagem ampliada';
+        lightboxMeta.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(totalImages).padStart(2, '0')} - ${lightboxImage.alt}`;
+      }
+
+      function openLightbox(index) {
+        updateNavVisibility();
+        renderImage(index);
+        lightboxRoot.classList.add('open');
+        lightboxRoot.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('lightbox-open');
+      }
+
+      function closeLightbox() {
+        lightboxRoot.classList.remove('open');
+        lightboxRoot.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('lightbox-open');
+        lightboxImage.src = '';
+        lightboxImage.alt = '';
+        lightboxMeta.textContent = '';
+      }
+
+      galleryImages.forEach((image, index) => {
+        image.classList.add('zoomable');
+        image.tabIndex = 0;
+        image.addEventListener('click', () => openLightbox(index));
+        image.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openLightbox(index);
+          }
+        });
+      });
+
+      lightboxPrev.addEventListener('click', () => renderImage(currentIndex - 1));
+      lightboxNext.addEventListener('click', () => renderImage(currentIndex + 1));
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightboxBackdrop.addEventListener('click', closeLightbox);
+
+      document.addEventListener('keydown', (event) => {
+        if (!lightboxRoot.classList.contains('open')) {
+          return;
+        }
+
+        if (event.key === 'Escape') {
+          closeLightbox();
+        } else if (event.key === 'ArrowLeft') {
+          renderImage(currentIndex - 1);
+        } else if (event.key === 'ArrowRight') {
+          renderImage(currentIndex + 1);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

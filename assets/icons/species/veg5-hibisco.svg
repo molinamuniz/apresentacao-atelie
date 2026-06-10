@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Hibisco">
+  <rect width="64" height="64" rx="14" fill="#b45b6f"/>
+  <g transform="translate(32 33)">
+    <g fill="#ffd9e1">
+      <ellipse rx="7" ry="12" transform="rotate(18)"/>
+      <ellipse rx="7" ry="12" transform="rotate(90)"/>
+      <ellipse rx="7" ry="12" transform="rotate(162)"/>
+      <ellipse rx="7" ry="12" transform="rotate(234)"/>
+      <ellipse rx="7" ry="12" transform="rotate(306)"/>
+    </g>
+    <circle r="4" fill="#f4e38f"/>
+  </g>
+  <path d="M31 32l8-12" stroke="#ffeef2" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

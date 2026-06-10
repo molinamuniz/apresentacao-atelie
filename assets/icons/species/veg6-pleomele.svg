@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Pleomele">
+  <rect width="64" height="64" rx="14" fill="#5f8a64"/>
+  <g fill="#dcefd9" stroke="#c4dfc2" stroke-width="0.8" transform="translate(32 32)">
+    <ellipse rx="4.5" ry="15" transform="rotate(0)"/>
+    <ellipse rx="4.5" ry="15" transform="rotate(45)"/>
+    <ellipse rx="4.5" ry="15" transform="rotate(90)"/>
+    <ellipse rx="4.5" ry="15" transform="rotate(135)"/>
+  </g>
+  <circle cx="32" cy="32" r="3" fill="#eef8ea"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Extremosa">
+  <rect width="64" height="64" rx="14" fill="#7b9a57"/>
+  <ellipse cx="32" cy="24" rx="16" ry="12" fill="#dcedcb"/>
+  <ellipse cx="24" cy="27" rx="8" ry="7" fill="#c7e1b6"/>
+  <ellipse cx="40" cy="27" rx="8" ry="7" fill="#c7e1b6"/>
+  <rect x="29.5" y="30" width="5" height="19" rx="2.5" fill="#f0e3cf"/>
+</svg>

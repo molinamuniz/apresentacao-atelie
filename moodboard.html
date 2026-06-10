@@ -366,6 +366,116 @@
       opacity: 0.7;
     }
 
+    .zoomable {
+      cursor: zoom-in;
+    }
+
+    #mb-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      display: none;
+    }
+
+    #mb-lightbox.open {
+      display: block;
+    }
+
+    #mb-lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(13, 10, 8, 0.88);
+      backdrop-filter: blur(5px);
+    }
+
+    #mb-lightbox-panel {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    #mb-lightbox-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 20px 0;
+    }
+
+    #mb-lightbox-meta {
+      font-size: 0.56rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(248, 243, 236, 0.78);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #mb-lightbox-close {
+      border: 1px solid rgba(248, 243, 236, 0.24);
+      background: rgba(248, 243, 236, 0.1);
+      color: rgba(248, 243, 236, 0.92);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.56rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    #mb-lightbox-stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 18px 70px 30px;
+    }
+
+    #mb-lightbox-image {
+      max-width: min(92vw, 1700px);
+      max-height: calc(100dvh - 110px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    }
+
+    .mb-lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(248, 243, 236, 0.28);
+      background: rgba(27, 21, 17, 0.6);
+      color: rgba(248, 243, 236, 0.92);
+      font-size: 1.9rem;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    #mb-lightbox-prev {
+      left: 14px;
+    }
+
+    #mb-lightbox-next {
+      right: 14px;
+    }
+
+    .mb-lightbox-nav[hidden] {
+      display: none;
+    }
+
+    body.lightbox-open {
+      overflow: hidden;
+    }
+
     /* ══ PRINT ═══════════════════════════════════════════════════ */
     @media print {
       body {
@@ -399,7 +509,7 @@
   </header>
 
   <!-- ── GRID PRINCIPAL ────────────────────────────────────────── -->
-  <div class="mb-grid">
+  <div class="mb-grid" data-lightbox-gallery>
 
     <!--
       01 · Estrutura curva em madeira
@@ -468,7 +578,7 @@
   <div class="mb-bottom">
 
     <!-- Amostra de material: madeira nogueira -->
-    <div class="mb-wood">
+    <div class="mb-wood" data-lightbox-gallery>
       <img
         src="Moodboard 1/image.png"
         alt="Textura madeira nogueira — aconchego e calor">
@@ -546,6 +656,103 @@
   </footer>
 
 </article>
+
+<div id="mb-lightbox" aria-hidden="true" role="dialog" aria-label="Visualizador de imagem do moodboard">
+  <div id="mb-lightbox-backdrop"></div>
+  <div id="mb-lightbox-panel">
+    <div id="mb-lightbox-toolbar">
+      <div id="mb-lightbox-meta"></div>
+      <button id="mb-lightbox-close" type="button" aria-label="Fechar visualizador">Fechar</button>
+    </div>
+    <div id="mb-lightbox-stage">
+      <button id="mb-lightbox-prev" class="mb-lightbox-nav" type="button" aria-label="Imagem anterior">‹</button>
+      <img id="mb-lightbox-image" src="" alt="">
+      <button id="mb-lightbox-next" class="mb-lightbox-nav" type="button" aria-label="Próxima imagem">›</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const galleryGroups = Array.from(document.querySelectorAll('[data-lightbox-gallery]'));
+    const galleryImages = galleryGroups.flatMap((group) => Array.from(group.querySelectorAll('img')));
+    if (galleryImages.length === 0) {
+      return;
+    }
+
+    const lightboxRoot = document.getElementById('mb-lightbox');
+    const lightboxBackdrop = document.getElementById('mb-lightbox-backdrop');
+    const lightboxClose = document.getElementById('mb-lightbox-close');
+    const lightboxImage = document.getElementById('mb-lightbox-image');
+    const lightboxMeta = document.getElementById('mb-lightbox-meta');
+    const lightboxPrev = document.getElementById('mb-lightbox-prev');
+    const lightboxNext = document.getElementById('mb-lightbox-next');
+    let currentIndex = 0;
+
+    function updateNavVisibility() {
+      const hasMultiple = galleryImages.length > 1;
+      lightboxPrev.hidden = !hasMultiple;
+      lightboxNext.hidden = !hasMultiple;
+    }
+
+    function renderImage(index) {
+      const totalImages = galleryImages.length;
+      currentIndex = (index + totalImages) % totalImages;
+      const sourceImage = galleryImages[currentIndex];
+      lightboxImage.src = sourceImage.currentSrc || sourceImage.getAttribute('src') || '';
+      lightboxImage.alt = sourceImage.alt || 'Imagem ampliada';
+      lightboxMeta.textContent = `${String(currentIndex + 1).padStart(2, '0')} / ${String(totalImages).padStart(2, '0')} - ${lightboxImage.alt}`;
+    }
+
+    function openLightbox(index) {
+      updateNavVisibility();
+      renderImage(index);
+      lightboxRoot.classList.add('open');
+      lightboxRoot.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open');
+    }
+
+    function closeLightbox() {
+      lightboxRoot.classList.remove('open');
+      lightboxRoot.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lightbox-open');
+      lightboxImage.src = '';
+      lightboxImage.alt = '';
+      lightboxMeta.textContent = '';
+    }
+
+    galleryImages.forEach((image, index) => {
+      image.classList.add('zoomable');
+      image.tabIndex = 0;
+      image.addEventListener('click', () => openLightbox(index));
+      image.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openLightbox(index);
+        }
+      });
+    });
+
+    lightboxPrev.addEventListener('click', () => renderImage(currentIndex - 1));
+    lightboxNext.addEventListener('click', () => renderImage(currentIndex + 1));
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxBackdrop.addEventListener('click', closeLightbox);
+
+    document.addEventListener('keydown', (event) => {
+      if (!lightboxRoot.classList.contains('open')) {
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        closeLightbox();
+      } else if (event.key === 'ArrowLeft') {
+        renderImage(currentIndex - 1);
+      } else if (event.key === 'ArrowRight') {
+        renderImage(currentIndex + 1);
+      }
+    });
+  })();
+</script>
 
 </body>
 </html>
