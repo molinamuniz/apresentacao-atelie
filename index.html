@@ -436,6 +436,58 @@
       justify-content: center;
       z-index: 2;
     }
+
+    .slide--ending {
+      color: #faf8f5;
+    }
+
+    .ending-gallery {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .ending-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1000ms ease-in-out;
+    }
+
+    .ending-frame.active {
+      opacity: 1;
+    }
+
+    .ending-frame .real-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .ending-shell {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .ending-title {
+      margin: 0;
+      font-size: clamp(2.4rem, 7vw, 6.8rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+    }
+
+    .ending-rule {
+      width: min(440px, 70vw);
+      height: 1px;
+      margin: 1.2rem auto 0;
+      background: rgba(250, 248, 245, 0.56);
+    }
   </style>
 </head>
 <body>
@@ -444,7 +496,7 @@
     <div id="prog"></div>
     <div id="brand">Maternidade Origem</div>
     <nav id="dots" aria-label="Navegação entre slides"></nav>
-    <div id="count">01 / 12</div>
+    <div id="count">01 / 25</div>
     <div id="mobile-nav" aria-label="Navegação mobile">
       <button id="mobile-prev" type="button" aria-label="Slide anterior">Anterior</button>
       <span id="mobile-title" aria-live="polite">Capa</span>
@@ -795,6 +847,26 @@
       <span class="slide-no">Setor 07 / Capa</span>
     </section>
 
+    <section class="slide slide--cover slide--ending" data-light="false" data-title="Encerramento" id="s18">
+      <div class="ending-gallery" aria-hidden="true">
+        <div class="ending-frame active">
+          <img class="real-image" src="Slides/SETORES/FACHADA/FACHADA 06.png" alt="Fachada ao entardecer">
+        </div>
+        <div class="ending-frame">
+          <img class="real-image" src="Slides/SETORES/FACHADA/VIVENCIAS 02.png" alt="Área de vivências externas">
+        </div>
+        <div class="ending-frame">
+          <img class="real-image" src="Slides/SETORES/FACHADA/FACHADA 01.png" alt="Vista principal da fachada">
+        </div>
+      </div>
+      <div class="cover-veil"></div>
+
+      <div class="cover-body ending-shell">
+        <h2 class="ending-title">Maternidade Origem</h2>
+        <div class="ending-rule" aria-hidden="true"></div>
+      </div>
+    </section>
+
   </main>
 
   <div id="lightbox" aria-hidden="true">
@@ -885,6 +957,28 @@
 
     (function () {
       var frames = document.querySelectorAll('.cover-frame');
+      if (frames.length <= 1) {
+        return;
+      }
+
+      var currentIndex = 0;
+
+      function showFrame(index) {
+        frames.forEach(function (frame, i) {
+          frame.classList.toggle('active', i === index);
+        });
+      }
+
+      function nextFrame() {
+        currentIndex = (currentIndex + 1) % frames.length;
+        showFrame(currentIndex);
+      }
+
+      setInterval(nextFrame, 4000);
+    })();
+
+    (function () {
+      var frames = document.querySelectorAll('.ending-frame');
       if (frames.length <= 1) {
         return;
       }
