@@ -134,7 +134,7 @@
     }
 
     .slide--plan-cover .sector-cover {
-      grid-template-columns: minmax(0, 1fr) minmax(380px, 40vw);
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 32vw);
       align-items: center;
       gap: clamp(1rem, 2vw, 1.6rem);
       width: min(94vw, 1500px);
@@ -142,6 +142,17 @@
       padding: 0;
       margin: 0 auto;
       background: transparent;
+    }
+
+    #s6.slide--plan-cover .sector-cover,
+    #s8.slide--plan-cover .sector-cover,
+    #s15.slide--plan-cover .sector-cover {
+      grid-template-columns: minmax(0, 1fr) minmax(390px, 41vw);
+    }
+
+    #s13.slide--plan-cover .sector-cover,
+    #s16.slide--plan-cover .sector-cover {
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 37vw);
     }
 
     .slide--plan-cover .sector-cover__media {
@@ -164,7 +175,7 @@
       font-size: clamp(1.05rem, 1.8vw, 1.9rem);
       letter-spacing: 0.02em;
       line-height: 1.08;
-      white-space: nowrap;
+      white-space: normal;
     }
 
     .wall {
@@ -315,8 +326,8 @@
       letter-spacing: 0.06em;
       margin: 0;
       text-transform: uppercase;
-      word-break: break-word;
-      overflow-wrap: break-word;
+      word-break: normal;
+      overflow-wrap: normal;
     }
 
     .sector-cover__copy p {
