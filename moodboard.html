@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moodboard · Ateliê V · Projeto Humanizado</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #F5F0E8;
+      --board:      #D6CEBC;
+      --gap:        5px;
+      --pad:        30px;
+      --dark:       #251A0E;
+      --mid:        #7A6A58;
+      --muted:      #AFA090;
+      --border:     #C4B09A;
+      --accent:     #9C2330;
+      --serif:      'Cormorant Garamond', Georgia, serif;
+      --sans:       'Montserrat', system-ui, sans-serif;
+    }
+
+    html {
+      zoom: 1.0;
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--board);
+      background-image:
+        radial-gradient(circle, rgba(140,120,96,0.25) 1px, transparent 1px);
+      background-size: 18px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 44px 28px;
+      font-family: var(--sans);
+    }
+
+    /* ══ CONTAINER ═══════════════════════════════════════════════ */
+    .moodboard {
+      background: var(--bg);
+      width: min(1340px, 100%);
+      padding: var(--pad);
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.08),
+        0 8px 32px rgba(0,0,0,0.16),
+        0 24px 72px rgba(0,0,0,0.14);
+    }
+
+    /* ══ HEADER ══════════════════════════════════════════════════ */
+    .mb-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mb-title .eyebrow {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 7px;
+    }
+
+    .mb-title h1 {
+      font-family: var(--serif);
+      font-size: 2.15rem;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      color: var(--dark);
+      line-height: 1.1;
+    }
+
+    .mb-title h1 em {
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .mb-header-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .mb-header-right .label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .mb-header-right .value {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--dark);
+      letter-spacing: 0.04em;
+    }
+
+    /* ══ MAIN GRID ═══════════════════════════════════════════════ */
+    .mb-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1.05fr 0.88fr 0.88fr;
+      grid-template-rows: 282px 232px;
+      gap: var(--gap);
+    }
+
+    .mb-cell {
+      overflow: hidden;
+      position: relative;
+      background: #C0B0A0;
+    }
+
+    .mb-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .mb-cell:hover img { transform: scale(1.045); }
+
+    /* Cell grid positions */
+    .cell-arch     { grid-column: 1;     grid-row: 1 / 3; }
+    .cell-lobby    { grid-column: 2 / 4; grid-row: 1;     }
+    .cell-stone    { grid-column: 4;     grid-row: 1;     }
+    .cell-health   { grid-column: 2;     grid-row: 2;     }
+    .cell-exterior { grid-column: 3 / 5; grid-row: 2;     }
+
+    /* Hover overlay label */
+    .cell-tag {
+      position: absolute;
+      inset: auto 0 0;
+      padding: 28px 13px 11px;
+      background: linear-gradient(transparent, rgba(14, 7, 2, 0.65));
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 252, 246, 0.92);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+
+    .mb-cell:hover .cell-tag { opacity: 1; }
+
+    /* Corner badge */
+    .cell-num {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(245, 240, 232, 0.90);
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0;
+    }
+
+    /* Accent bar on hovered cell */
+    .mb-cell::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--accent);
+      transition: width 0.4s ease;
+    }
+
+    .mb-cell:hover::after { width: 100%; }
+
+    /* ══ BOTTOM STRIP ════════════════════════════════════════════ */
+    .mb-bottom {
+      margin-top: var(--gap);
+      display: grid;
+      grid-template-columns: 1.25fr 1.93fr 1.81fr;
+      gap: var(--gap);
+      height: 158px;
+    }
+
+    /* Wood texture tile */
+    .mb-wood {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .mb-wood img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .mb-wood .wood-label {
+      position: absolute;
+      bottom: 9px;
+      right: 10px;
+      font-size: 0.60rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(60, 38, 16, 0.55);
+    }
+
+    /* Palette panel */
+    .mb-palette {
+      background: #EDEBE3;
+      padding: 15px 20px 13px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .palette-head {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .palette-swatches {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      flex: 1;
+      padding: 10px 0 0;
+    }
+
+    .swatch-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .swatch-bar {
+      width: 100%;
+      height: 46px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .swatch-name {
+      font-size: 0.60rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .swatch-hex {
+      font-size: 0.56rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Concept panel */
+    .mb-concept {
+      background: #EDEBE3;
+      border: 1px solid var(--border);
+      padding: 15px 22px 13px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .concept-head {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .concept-quote {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--dark);
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .concept-quote::before {
+      content: '"';
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: rgba(156, 35, 48, 0.25);
+      line-height: 0;
+      margin-right: 6px;
+      position: relative;
+      top: 8px;
+      flex-shrink: 0;
+    }
+
+    .concept-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .concept-tag {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(156, 35, 48, 0.28);
+      padding: 2px 9px 3px;
+      border-radius: 1px;
+    }
+
+    /* ══ FOOTER ══════════════════════════════════════════════════ */
+    .mb-footer {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-txt {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .footer-rule {
+      width: 36px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.7;
+    }
+
+    /* ══ PRINT ═══════════════════════════════════════════════════ */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+        display: block;
+      }
+
+      .moodboard {
+        box-shadow: none;
+        width: 100%;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<article class="moodboard">
+
+  <!-- ── HEADER ────────────────────────────────────────────────── -->
+  <header class="mb-header">
+    <div class="mb-title">
+      <span class="eyebrow">Maternidade Origem · Ateliê V</span>
+      <h1>Moodboard &amp; <em>Referências Projetuais</em></h1>
+    </div>
+    <div class="mb-header-right">
+      <span class="label">Partido Arquitetônico</span>
+      <span class="value">Humanização · Biofilia · Organicidade</span>
+    </div>
+  </header>
+
+  <!-- ── GRID PRINCIPAL ────────────────────────────────────────── -->
+  <div class="mb-grid">
+
+    <!--
+      01 · Estrutura curva em madeira
+      Referência formal: ritmo, luz filtrada, organicidade estrutural
+    -->
+    <div class="mb-cell cell-arch">
+      <img
+        src="Moodboard 1/bdb4695092ce489b0e5f9879bb707f7e.jpg"
+        alt="Estrutura curva em madeira — ritmo e luz filtrada">
+      <span class="cell-num">01</span>
+      <span class="cell-tag">Madeira · Estrutura · Ritmo · Luz Natural</span>
+    </div>
+
+    <!--
+      02 · Lobby biofílico com vegetação tropical
+      Referência ambiental: integração interior/natureza, acolhimento
+    -->
+    <div class="mb-cell cell-lobby">
+      <img
+        src="Moodboard 1/image (3).png"
+        alt="Lobby biofílico com vegetação tropical e luz natural">
+      <span class="cell-num">02</span>
+      <span class="cell-tag">Biofilia · Lobby · Ambiência Terapêutica</span>
+    </div>
+
+    <!--
+      03 · Textura pedra quartzito
+      Referência material: piso e revestimento — leveza, naturalidade
+    -->
+    <div class="mb-cell cell-stone">
+      <img
+        src="Moodboard 1/image (1).png"
+        alt="Textura pedra quartzito mosaico irregular">
+      <span class="cell-num">03</span>
+      <span class="cell-tag">Quartzito · Textura · Revestimento</span>
+    </div>
+
+    <!--
+      04 · Interior humanizado de centro de saúde
+      Referência programática: corredor-galeria, parede verde, arcos
+    -->
+    <div class="mb-cell cell-health">
+      <img
+        src="Moodboard 1/Deconstructivism Style Healthcare Center Design Ideas.jpg"
+        alt="Interior humanizado de centro de saúde — arcos e parede verde">
+      <span class="cell-num">04</span>
+      <span class="cell-tag">Saúde · Humanização · Parede Verde · Arcos</span>
+    </div>
+
+    <!--
+      05 · Edifício com pátio interno — arcos e escala urbana
+      Referência volumétrica: pátio como jardim terapêutico, fachada com arcos
+    -->
+    <div class="mb-cell cell-exterior">
+      <img
+        src="Moodboard 1/image (2).png"
+        alt="Edifício com pátio interno — arcos e escala urbana"
+        style="object-position: center 75%;">
+      <span class="cell-num">05</span>
+      <span class="cell-tag">Volumetria · Pátio Interno · Arcos · Paisagismo</span>
+    </div>
+
+  </div>
+
+  <!-- ── FAIXA INFERIOR ────────────────────────────────────────── -->
+  <div class="mb-bottom">
+
+    <!-- Amostra de material: madeira nogueira -->
+    <div class="mb-wood">
+      <img
+        src="Moodboard 1/image.png"
+        alt="Textura madeira nogueira — aconchego e calor">
+      <span class="wood-label">Madeira Nogueira · Forro e Mobiliário</span>
+    </div>
+
+    <!-- Paleta de cores -->
+    <div class="mb-palette">
+      <span class="palette-head">Paleta de Cores · Materialidade</span>
+      <div class="palette-swatches">
+
+        <div class="swatch-item">
+          <div class="swatch-bar" style="background:#D3C0A5;"></div>
+          <span class="swatch-name">Areia</span>
+          <span class="swatch-hex">#D3C0A5</span>
+        </div>
+
+        <div class="swatch-item">
+          <div class="swatch-bar" style="background:#89B07B;"></div>
+          <span class="swatch-name">Sálvia</span>
+          <span class="swatch-hex">#89B07B</span>
+        </div>
+
+        <div class="swatch-item">
+          <div class="swatch-bar" style="background:#BA7770;"></div>
+          <span class="swatch-name">Terracota</span>
+          <span class="swatch-hex">#BA7770</span>
+        </div>
+
+        <div class="swatch-item">
+          <div class="swatch-bar" style="background:#EDCE91;"></div>
+          <span class="swatch-name">Palha</span>
+          <span class="swatch-hex">#EDCE91</span>
+        </div>
+
+        <div class="swatch-item">
+          <div class="swatch-bar" style="background:#71744F;"></div>
+          <span class="swatch-name">Oliva</span>
+          <span class="swatch-hex">#71744F</span>
+        </div>
+
+        <div class="swatch-item">
+          <div class="swatch-bar" style="background:#5C2120;"></div>
+          <span class="swatch-name">Bordô</span>
+          <span class="swatch-hex">#5C2120</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Conceito e partido -->
+    <div class="mb-concept">
+      <span class="concept-head">Conceito · Partido Arquitetônico</span>
+      <p class="concept-quote">
+        Arquitetura que acolhe, cura e inspira através da matéria natural,
+        da luz filtrada e da presença viva da vegetação.
+      </p>
+      <div class="concept-tags">
+        <span class="concept-tag">Humanização</span>
+        <span class="concept-tag">Biofilia</span>
+        <span class="concept-tag">Organicidade</span>
+        <span class="concept-tag">Acolhimento</span>
+        <span class="concept-tag">Cura</span>
+        <span class="concept-tag">Luz Natural</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── RODAPÉ ─────────────────────────────────────────────────── -->
+  <footer class="mb-footer">
+    <span class="footer-txt">Ateliê V · Projeto Humanizado · Junho 2026</span>
+    <div class="footer-rule"></div>
+    <span class="footer-txt">[Integrantes do Grupo]</span>
+  </footer>
+
+</article>
+
+</body>
+</html>

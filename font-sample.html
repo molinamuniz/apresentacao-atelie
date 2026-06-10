@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amostra de Fontes · Maternidade Origem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@300&family=Gilda+Display&family=Italiana&family=Poiret+One&family=Raleway:wght@100;200&family=Josefin+Sans:wght@100&family=Cinzel:wght@300&family=Rufina:wght@400&family=Tenor+Sans&family=Forum&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1c1510;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+      font-family: 'Tenor Sans', sans-serif;
+    }
+
+    h2.page-label {
+      font-family: 'Tenor Sans', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: rgba(250,248,245,0.22);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .context-note {
+      font-size: 0.56rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: rgba(197, 176, 154, 0.5);
+      text-align: center;
+      margin-bottom: 52px;
+      line-height: 1.9;
+    }
+
+    .samples {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      width: min(860px, 100%);
+    }
+
+    .sample {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.055);
+      padding: 32px 48px 28px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 32px;
+      transition: background 0.2s;
+      cursor: default;
+    }
+
+    .sample:hover { background: rgba(255,255,255,0.06); }
+
+    .sample-title {
+      color: rgba(250, 248, 245, 0.92);
+      line-height: 1;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .sample-meta {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .meta-num {
+      display: block;
+      font-size: 0.48rem;
+      font-weight: 500;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: rgba(156,35,48,0.65);
+      margin-bottom: 5px;
+    }
+
+    .meta-name {
+      display: block;
+      font-size: 0.56rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: rgba(250,248,245,0.28);
+      line-height: 1.7;
+    }
+
+    .meta-why {
+      display: block;
+      font-size: 0.52rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: rgba(197,176,154,0.38);
+      line-height: 1.6;
+      margin-top: 4px;
+      max-width: 180px;
+    }
+
+    /* ── 01 · Cormorant Infant Light — a mais próxima do moodboard */
+    .s1 .sample-title { font-family: 'Cormorant Infant', serif; font-weight: 300; font-size: 3.8rem; }
+
+    /* ── 02 · Gilda Display — serifa fina com traços orgânicos */
+    .s2 .sample-title { font-family: 'Gilda Display', serif; font-size: 3.2rem; }
+
+    /* ── 03 · Italiana — ultra-fina, traços italianizantes */
+    .s3 .sample-title { font-family: 'Italiana', serif; font-size: 3.4rem; letter-spacing: 0.08em; }
+
+    /* ── 04 · Poiret One — art déco, geométrica, levíssima */
+    .s4 .sample-title { font-family: 'Poiret One', sans-serif; font-size: 3.0rem; letter-spacing: 0.12em; }
+
+    /* ── 05 · Raleway 100 — ultra thin, arquitetônica */
+    .s5 .sample-title { font-family: 'Raleway', sans-serif; font-weight: 100; font-size: 3.4rem; letter-spacing: 0.14em; }
+
+    /* ── 06 · Josefin Sans Thin — geométrica minimalista */
+    .s6 .sample-title { font-family: 'Josefin Sans', sans-serif; font-weight: 100; font-size: 3.2rem; letter-spacing: 0.18em; text-transform: uppercase; }
+
+    /* ── 07 · Cinzel Light — romana clássica, majestosa */
+    .s7 .sample-title { font-family: 'Cinzel', serif; font-weight: 300; font-size: 2.8rem; letter-spacing: 0.1em; }
+
+    /* ── 08 · Rufina — serifa display, traços finos elegantes */
+    .s8 .sample-title { font-family: 'Rufina', serif; font-size: 3.2rem; letter-spacing: 0.06em; }
+
+    /* ── 09 · Tenor Sans — humanista, quente, sem serifa */
+    .s9 .sample-title { font-family: 'Tenor Sans', sans-serif; font-size: 3.0rem; letter-spacing: 0.1em; }
+
+    /* ── 10 · Forum — calligráfica clássica, feminina */
+    .s10 .sample-title { font-family: 'Forum', cursive; font-size: 3.4rem; letter-spacing: 0.07em; }
+
+    .rec-badge {
+      display: inline-block;
+      font-size: 0.44rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(197,176,154,0.8);
+      border: 1px solid rgba(197,176,154,0.3);
+      padding: 2px 8px 3px;
+      border-radius: 1px;
+      margin-top: 6px;
+    }
+
+    .footer-note {
+      margin-top: 48px;
+      font-size: 0.52rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(250,248,245,0.16);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 class="page-label">Amostra tipográfica · Maternidade Origem</h2>
+  <p class="context-note">
+    Paleta do projeto: areia · sálvia · terracota · madeira · bordô<br>
+    Conceito: biofilia · humanização · organicidade · acolhimento
+  </p>
+
+  <div class="samples">
+
+    <div class="sample s1">
+      <div class="sample-title">Maternidade Origem</div>
+      <div class="sample-meta">
+        <span class="meta-num">Opção 01</span>
+        <span class="meta-name">Cormorant Infant Light</span>
+        <span class="meta-why">Família do moodboard. Traço vivo,<br>quente e levemente caligráfico.</span>
+        <span class="rec-badge">★ Recomendada</span>
+      </div>
+    </div>
+
+    <div class="sample s2">
+      <div class="sample-title">Maternidade Origem</div>
+      <div class="sample-meta">
+        <span class="meta-num">Opção 02</span>
+        <span class="meta-name">Gilda Display</span>
+        <span class="meta-why">Traços finos e orgânicos,<br>serifa humanista suave.</span>
+        <span class="rec-badge">★ Recomendada</span>
+      </div>
+    </div>
+
+    <div class="sample s3">
+      <div class="sample-title">Maternidade Origem</div>
+      <div class="sample-meta">
+        <span class="meta-num">Opção 03</span>
+        <span class="meta-name">Italiana</span>
+        <span class="meta-why">Ultra-fina, elegante,<br>traços inspirados na caligrafia italiana.</span>
+      </div>
+    </div>
+
+    <div class="sample s4">
+      <div class="sample-title">Maternidade Origem</div>
+      <div class="sample-meta">
+        <span class="meta-num">Opção 04</span>
+        <span class="meta-name">Poiret One</span>
+        <span class="meta-why">Art déco, geométrica levíssima,<br>traços arquitetônicos.</span>
+      </div>
+    </div>
+
+    <div class="sample s5">
+      <div class="sample-title">Maternidade Origem</div>
+      <div class="sample-meta">
+        <span class="meta-num">Opção 05</span>
+        <span class="meta-name">Raleway 100</span>
+        <span class="meta-why">Ultra-thin moderno,<br>muito arejada e limpa.</span>
+      </div>
+    </div>
+
+    <div class="sample s6">
+      <div class="sample-title">Maternidade Origem</div>
+      <div class="sample-meta">
+        <span class="meta-num">Opção 06</span>
+        <span class="meta-name">Josefin Sans Thin</span>
+        <span class="meta-why">Geométrica minimalista,<br>fria mas precisa.</span>
+      </div>
+    </div>
+
+    <div class="sample s7">
+      <div class="sample-title">Maternidade Origem</div>
+      <div class="sample-meta">
+        <span class="meta-num">Opção 07</span>
+        <span class="meta-name">Cinzel Light</span>
+        <span class="meta-why">Romana clássica, majestosa,<br>evoca permanência e cuidado.</span>
+      </div>
+    </div>
+
+    <div class="sample s8">
+      <div class="sample-title">Maternidade Origem</div>
+      <div class="sample-meta">
+        <span class="meta-num">Opção 08</span>
+        <span class="meta-name">Rufina</span>
+        <span class="meta-why">Serifa display fina,<br>traços irregulares como a madeira.</span>
+      </div>
+    </div>
+
+    <div class="sample s9">
+      <div class="sample-title">Maternidade Origem</div>
+      <div class="sample-meta">
+        <span class="meta-num">Opção 09</span>
+        <span class="meta-name">Tenor Sans</span>
+        <span class="meta-why">Humanista sem serifa,<br>quente e legível.</span>
+        <span class="rec-badge">★ Recomendada</span>
+      </div>
+    </div>
+
+    <div class="sample s10">
+      <div class="sample-title">Maternidade Origem</div>
+      <div class="sample-meta">
+        <span class="meta-num">Opção 10</span>
+        <span class="meta-name">Forum</span>
+        <span class="meta-why">Clássica com alma caligráfica,<br>feminina e orgânica.</span>
+        <span class="rec-badge">★ Recomendada</span>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="footer-note">Diga o número preferido para aplicar na apresentação</p>
+
+</body>
+</html>

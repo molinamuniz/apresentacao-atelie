@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ateliê V · 3ª Entrega · Projeto Humanizado</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&family=Poiret+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../Portfolio/assets/css/style.css">
+  <style>
+    /* ── Placeholders de imagem ────────────────────────────────────
+       Substituir cada <div class="img-ph"> por <img src="..." alt="...">
+       quando as imagens finais estiverem prontas.
+    ─────────────────────────────────────────────────────────────── */
+    .img-ph {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #5C2120 0%, #5C2120 100%);
+    }
+
+    .img-ph::after {
+      content: attr(data-label);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.56rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(28, 21, 16, 0.42);
+      text-align: center;
+      padding: 0 1.5rem;
+      line-height: 2.2;
+    }
+
+    /* Capa: fundo escuro */
+    .cover-frame .img-ph {
+      background: linear-gradient(135deg, #2e2520 0%, #1c1510 100%);
+    }
+
+    .cover-frame .img-ph::after {
+      color: rgba(250, 248, 245, 0.28);
+    }
+
+    /* Preview cards: fundo sutil */
+    .preview-card .img-ph {
+      background: linear-gradient(160deg, #d4cbc0 0%, #5C2120 100%);
+    }
+
+    .real-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .real-image--plan {
+      object-fit: contain;
+      background: #efe7dc;
+    }
+
+    .adaptive-ratio-card {
+      aspect-ratio: var(--img-ratio, 16 / 10);
+      width: 100%;
+      max-width: calc(var(--adaptive-max-height, 78vh) * var(--img-ratio, 1.6));
+      max-height: 78vh;
+      margin: 0 auto;
+    }
+
+    .adaptive-ratio-card .real-image,
+    .adaptive-ratio-card .real-image--plan {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .slide--plan,
+    .slide--plan-cover {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      padding: clamp(3.8rem, 6vh, 5rem) 4vw clamp(2.8rem, 5vh, 4rem);
+      color: #1c1510;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(92, 33, 32, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(92, 33, 32, 0.035) 1px, transparent 1px),
+        #f3eee5;
+      background-size: 91px 91px;
+    }
+
+    .slide--plan .feature-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 24vw);
+      align-items: center;
+      gap: clamp(1rem, 2vw, 1.6rem);
+      width: min(94vw, 1500px);
+      height: min(calc(100vh - 8rem), 780px);
+      margin: 0 auto;
+    }
+
+    .slide--plan .feature-media {
+      justify-self: stretch;
+      width: 100%;
+      max-height: min(calc(100vh - 8rem), 780px);
+      --adaptive-max-height: min(calc(100vh - 8rem), 780px);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 18px 44px rgba(28, 21, 16, 0.14);
+      background: #efe7dc;
+    }
+
+    .slide--plan .feature-copy {
+      max-width: 100%;
+      padding: clamp(1.1rem, 2vw, 1.8rem);
+      border-radius: 16px;
+      background: rgba(250, 248, 245, 0.86);
+      box-shadow: 0 18px 44px rgba(28, 21, 16, 0.10);
+    }
+
+    .slide--plan .feature-copy h3 {
+      font-size: clamp(1.55rem, 2.5vw, 2.55rem);
+    }
+
+    .slide--plan .feature-copy p {
+      font-size: clamp(0.78rem, 1vw, 0.95rem);
+    }
+
+    .slide--plan-cover .sector-cover {
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 23vw);
+      align-items: center;
+      gap: clamp(1rem, 2vw, 1.6rem);
+      width: min(94vw, 1500px);
+      height: min(calc(100vh - 8rem), 780px);
+      padding: 0;
+      margin: 0 auto;
+      background: transparent;
+    }
+
+    .slide--plan-cover .sector-cover__media {
+      width: 100%;
+      max-height: min(calc(100vh - 8rem), 780px);
+      --adaptive-max-height: min(calc(100vh - 8rem), 780px);
+      border-radius: 18px;
+      box-shadow: 0 18px 44px rgba(28, 21, 16, 0.14);
+      background: #efe7dc;
+    }
+
+    .slide--plan-cover .sector-cover__copy {
+      padding: clamp(1.1rem, 2vw, 1.8rem);
+      border-radius: 16px;
+      background: rgba(250, 248, 245, 0.86);
+      box-shadow: 0 18px 44px rgba(28, 21, 16, 0.10);
+    }
+
+    .slide--plan-cover .sector-cover__copy h3 {
+      font-size: clamp(1.55rem, 2.7vw, 2.75rem);
+    }
+
+    .wall {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      width: 100%;
+      height: 100%;
+      padding: 1.5rem;
+      background: linear-gradient(150deg, #f0ebe2 0%, #e6dccd 100%);
+    }
+
+    .wall--dense {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.8rem;
+      padding: 1rem;
+    }
+
+    .wall--three-by-two {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .wall--two-by-two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .wall--single {
+      grid-template-columns: 1fr;
+      padding: 1.2rem;
+    }
+
+    .wall--single .wall-item {
+      min-height: min(72vh, 640px);
+    }
+
+    .wall-item {
+      position: relative;
+      min-height: 180px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(28, 21, 16, 0.16);
+      background: #c9b8a7;
+    }
+
+    .wall-item figcaption {
+      position: absolute;
+      left: 0.5rem;
+      bottom: 0.5rem;
+      z-index: 2;
+      padding: 0.24rem 0.5rem;
+      border-radius: 999px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #faf8f5;
+      background: rgba(28, 21, 16, 0.72);
+      backdrop-filter: blur(2px);
+    }
+
+    .wall-item.is-opening,
+    img.is-opening-image {
+      animation: image-open-pulse 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes image-open-pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      45% {
+        transform: scale(0.985);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    #lightbox {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+    }
+
+    #lightbox.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #lightbox-panel {
+      transform: translateY(0.75rem) scale(0.985);
+      transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    #lightbox.open #lightbox-panel {
+      transform: translateY(0) scale(1);
+    }
+
+    #lightbox-image {
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 180ms ease, transform 220ms ease;
+    }
+
+    #lightbox-image.is-swapping {
+      opacity: 0;
+      transform: scale(0.985);
+    }
+
+    .sector-cover {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 1.6rem;
+      width: 100%;
+      height: 100%;
+      padding: 2rem;
+      background: linear-gradient(140deg, #ece4d8 0%, #d9cdbf 100%);
+    }
+
+    .sector-cover__media {
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 14px 30px rgba(28, 21, 16, 0.14);
+      min-height: 0;
+      background: #d6cebc;
+    }
+
+    .sector-cover__copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.8rem;
+      color: #1c1510;
+    }
+
+    .sector-cover__copy h3 {
+      font-size: clamp(1.9rem, 3vw, 2.8rem);
+      letter-spacing: 0.06em;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .sector-cover__copy p {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      max-width: 38ch;
+    }
+
+    @media (max-width: 960px) {
+      .wall,
+      .wall--dense {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .slide--plan .feature-shell,
+      .slide--plan-cover .sector-cover {
+        grid-template-columns: 1fr;
+        height: auto;
+        padding: 5rem 1rem 3rem;
+      }
+
+      .sector-cover {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Poiret One — fonte display do projeto ─────────────────── */
+    .cover-title,
+    .cover-kicker,
+    h2, h3,
+    .project-number,
+    .eyebrow,
+    .feature-kicker,
+    .slide-no {
+      font-family: 'Poiret One', sans-serif !important;
+      font-weight: 400 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="ui">
+    <div id="prog"></div>
+    <div id="brand">Maternidade Origem</div>
+    <nav id="dots" aria-label="Navegação entre slides"></nav>
+    <div id="count">01 / 12</div>
+    <div id="mobile-nav" aria-label="Navegação mobile">
+      <button id="mobile-prev" type="button" aria-label="Slide anterior">Anterior</button>
+      <span id="mobile-title" aria-live="polite">Capa</span>
+      <button id="mobile-next" type="button" aria-label="Próximo slide">Próximo</button>
+    </div>
+  </div>
+
+  <main id="scroller" aria-label="Apresentação Ateliê V — Projeto Humanizado">
+
+    <!-- ════════════════════════════════════════════════════════════
+         SLIDE 00 · CAPA
+         Substituir: imagem de capa, título, disciplina, integrantes
+    ════════════════════════════════════════════════════════════ -->
+    <section class="slide slide--cover" data-light="false" data-title="Capa" id="s0">
+      <div class="cover-gallery" aria-hidden="true">
+        <div class="cover-frame active">
+          <div class="img-ph" data-label="[Imagem de capa]"></div>
+        </div>
+      </div>
+      <div class="cover-veil"></div>
+
+      <div class="cover-body">
+        <span class="cover-kicker">Ateliê V · 3ª Entrega · 10/06/2026</span>
+        <h1 class="cover-title" style="white-space:nowrap;font-size:clamp(36px,5.5vw,96px);letter-spacing:0.12em;">Maternidade Origem</h1>
+        <p class="cover-lead">
+          ORIENTADO POR: CLÓVIS AQUINO, ERICA COELHO, PRISCILA LOUREIRO
+        </p>
+        <div class="cover-rule"></div>
+        <div class="cover-meta">
+          <span>PROJETADO POR: EMANUELLY FERREIRA</span>
+          <span>KAROLAINE KOHLER</span>
+          <span>MARIANA GOTTARDO</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         SLIDE 01 · MOODBOARD & REFERÊNCIAS PROJETUAIS
+    ════════════════════════════════════════════════════════════ -->
+    <section class="slide slide--moodboard" data-light="true" data-title="Moodboard" id="s1" style="padding:0;background:#D6CEBC;">
+      <iframe
+        src="moodboard.html"
+        title="Moodboard · Referências Projetuais"
+        style="width:100%;height:100%;border:none;display:block;"
+        scrolling="no"
+        loading="lazy">
+      </iframe>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         SLIDE 02 · MOODBOARD 2 — INTERIORES E MATERIALIDADE
+    ════════════════════════════════════════════════════════════ -->
+    <section class="slide slide--moodboard" data-light="true" data-title="Moodboard 2" id="s2" style="padding:0;background:#CEC1B4;">
+      <iframe
+        src="moodboard2.html"
+        title="Moodboard 2 · Interiores e Materialidade"
+        style="width:100%;height:100%;border:none;display:block;"
+        scrolling="no"
+        loading="lazy">
+      </iframe>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         SLIDE 03 · MOODBOARD — OFICINA PAISAGISMO (EM DESENVOLVIMENTO)
+    ════════════════════════════════════════════════════════════ -->
+    <section class="slide slide--feature" data-light="true" data-title="Moodboard Paisagismo" id="s3">
+      <div class="feature-shell">
+        <div class="feature-media" aria-hidden="true">
+          <img class="real-image" src="Slides/03 - MOODBOARD/5.png" alt="Moodboard de paisagismo em desenvolvimento">
+        </div>
+        <aside class="feature-copy">
+          <span class="feature-kicker">Oficina de paisagismo</span>
+          <h3>Moodboard 3 em desenvolvimento.</h3>
+          <p>
+            Estrutura inicial posicionada para manter a ordem da apresentação.
+            Conteúdo visual final será refinado na próxima etapa.
+          </p>
+          <div class="feature-note">Referência visual provisória carregada da pasta 03 - MOODBOARD</div>
+        </aside>
+      </div>
+      <span class="slide-no">Moodboard / Paisagismo</span>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════
+         SLIDE 04 · MOODBOARD — OFICINA FACHADA (EM DESENVOLVIMENTO)
+    ════════════════════════════════════════════════════════════ -->
+    <section class="slide slide--feature" data-light="true" data-title="Moodboard Fachada" id="s4">
+      <div class="feature-shell">
+        <div class="feature-media" aria-hidden="true">
+          <img class="real-image" src="Slides/04 - MOODBOARD FACHADA - USAR ESSE MESMO/SLIDE 4 - MOODEBOARD.png" alt="Moodboard de fachada em desenvolvimento">
+        </div>
+        <aside class="feature-copy">
+          <span class="feature-kicker">Oficina de fachada</span>
+          <h3>Moodboard 4 em desenvolvimento.</h3>
+          <p>
+            Estrutura base já inserida para manter o encadeamento dos trabalhos.
+            Ajustes conceituais e composição final serão feitos em seguida.
+          </p>
+          <div class="feature-note">Arquivo base da pasta 04 - MOODBOARD FACHADA</div>
+        </aside>
+      </div>
+      <span class="slide-no">Moodboard / Fachada</span>
+    </section>
+
+    <!-- SLIDE 05–06 · SETORIZAÇÃO -->
+    <section class="slide slide--plan-cover" data-light="true" data-title="Setorização" id="s5">
+      <div class="sector-cover">
+        <div class="sector-cover__media adaptive-ratio-card" aria-hidden="true">
+          <img class="real-image real-image--plan" src="Slides/05 - SETORIZAÇÃO/SETORES .jpg" alt="Setorização do térreo e pavimento superior com escala gráfica">
+        </div>
+        <aside class="sector-cover__copy">
+          <span class="feature-kicker">Setorização · térreo e pavimento superior</span>
+          <h3>Leitura setorial em um único quadro.</h3>
+          <p>
+            Slide reservado para apresentar os dois pavimentos com escala gráfica,
+            conforme solicitado no mesmo painel.
+          </p>
+          <div class="feature-note">Slide 05-06 combinado</div>
+        </aside>
+      </div>
+      <span class="slide-no">Setorização / Geral</span>
+    </section>
+
+    <!-- SLIDE 07 · IMPLANTAÇÃO -->
+    <section class="slide slide--plan-cover" data-light="true" data-title="Implantação" id="s6">
+      <div class="sector-cover">
+        <div class="sector-cover__media adaptive-ratio-card" aria-hidden="true">
+          <img class="real-image real-image--plan" src="Slides/06 - IMPLANTAÇÃO/térreo - implantação_page-0001.jpg" alt="Implantação do térreo com paisagismo e escala gráfica">
+        </div>
+        <aside class="sector-cover__copy">
+          <span class="feature-kicker">Implantação · térreo com paisagismo</span>
+          <h3>Relação do conjunto com o lote.</h3>
+          <p>
+            Implantação posicionada no fluxo principal da apresentação,
+            preservando a ordem da lista enviada.
+          </p>
+          <div class="feature-note">Escala gráfica indicada na própria prancha</div>
+        </aside>
+      </div>
+      <span class="slide-no">Implantação / Térreo</span>
+    </section>
+
+    <!-- SLIDE 08 · VOLUMETRIAS EXTERNAS (EXEMPLAR) -->
+    <section class="slide" data-light="true" data-title="Volumetrias Externas · Exemplar" id="s7">
+      <div class="wall wall--single" aria-label="Volumetria externa exemplar de fachada">
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/FACHADA/FACHADA 01.png" alt="Imagem exemplar de fachada"><figcaption>Fachada</figcaption></figure>
+      </div>
+      <span class="slide-no">Volumetrias / Exemplar</span>
+    </section>
+
+    <!-- SLIDE 08B · VOLUMETRIAS EXTERNAS (FACHADA) -->
+    <section class="slide" data-light="true" data-title="Volumetrias Externas · Fachada" id="s7b">
+      <div class="wall" aria-label="Volumetrias externas complementares de fachada">
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/FACHADA/FACHADA 02.png" alt="Imagem de fachada 02"><figcaption>Fachada</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/FACHADA/FACHADA 03.png" alt="Imagem de fachada 03"><figcaption>Fachada</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/FACHADA/FACHADA 04.png" alt="Imagem de fachada 04"><figcaption>Fachada</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/FACHADA/FACHADA 05.png" alt="Imagem de fachada 05"><figcaption>Fachada</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/FACHADA/FACHADA 06.png" alt="Imagem de fachada 06"><figcaption>Fachada</figcaption></figure>
+      </div>
+      <span class="slide-no">Volumetrias / Fachada</span>
+    </section>
+
+    <!-- SLIDE 08C · VOLUMETRIAS EXTERNAS (VIVÊNCIAS) -->
+    <section class="slide" data-light="true" data-title="Volumetrias Externas · Vivências" id="s7c">
+      <div class="wall" aria-label="Volumetrias externas de vivências">
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/FACHADA/VIVENCIAS 01.png" alt="Imagem de vivências 01"><figcaption>Vivências</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/FACHADA/VIVENCIAS 02.png" alt="Imagem de vivências 02"><figcaption>Vivências</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/FACHADA/VIVENCIAS 03.png" alt="Imagem de vivências 03"><figcaption>Vivências</figcaption></figure>
+      </div>
+      <span class="slide-no">Volumetrias / Vivências</span>
+    </section>
+
+    <!-- SLIDE 09 · CAPA SETOR 01 -->
+    <section class="slide slide--plan-cover" data-light="true" data-title="Setor 01 · Recepção e Admissão" id="s8">
+      <div class="sector-cover">
+        <div class="sector-cover__media adaptive-ratio-card" aria-hidden="true">
+          <img class="real-image real-image--plan" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/SETOR ADMISSÃO_page-0001.jpg" alt="Planta baixa do setor de recepção principal e admissão">
+        </div>
+        <aside class="sector-cover__copy">
+          <span class="feature-kicker">Setor 01</span>
+          <h3>Recepção e admissão</h3>
+          <p>
+            Capa do setor com planta baixa e abertura da sequência de imagens do ambiente.
+            Após esta tela, as imagens seguem a ordem da pasta.
+          </p>
+        </aside>
+      </div>
+      <span class="slide-no">Setor 01 / Capa</span>
+    </section>
+
+    <!-- SLIDE 10 · IMAGENS SETOR 01 (EXEMPLAR) -->
+    <section class="slide" data-light="true" data-title="Setor 01 · Imagens · Exemplar" id="s9">
+      <div class="wall wall--single" aria-label="Render exemplar do setor de recepção e admissão">
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/ADMISSÃO 01.png" alt="Render exemplar de admissão"><figcaption>Admissão</figcaption></figure>
+      </div>
+      <span class="slide-no">Setor 01 / Exemplar</span>
+    </section>
+
+    <!-- SLIDE 10B · IMAGENS SETOR 01 (RESTANTE PAR) -->
+    <section class="slide" data-light="true" data-title="Setor 01 · Imagens · Complementares" id="s9b">
+      <div class="wall wall--three-by-two" aria-label="Renders complementares do setor de recepção e admissão">
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/ADMISSÃO 02.png" alt="Render de admissão 02"><figcaption>Admissão</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/RECEPÇÃO PRINCIPAL 01.png" alt="Render de recepção principal 01"><figcaption>Recepção principal</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/RECEPÇÃO PRINCIPAL 02.png" alt="Render de recepção principal 02"><figcaption>Recepção principal</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/RECEPÇÃO PRINCIPAL 03.png" alt="Render de recepção principal 03"><figcaption>Recepção principal</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/RECEPÇÃO PRINCIPAL 04.png" alt="Render de recepção principal 04"><figcaption>Recepção principal</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/01 - RECPÇÃO PRINCIPAL- ADMISSÃO/RENDER/RECEPÇÃO PRINCIPAL 05.png" alt="Render de recepção principal 05"><figcaption>Recepção principal</figcaption></figure>
+      </div>
+      <span class="slide-no">Setor 01 / Complementares</span>
+    </section>
+
+    <!-- SLIDE 11 · CAPA SETOR 02 -->
+    <section class="slide slide--plan-cover" data-light="true" data-title="Setor 02 · Internação" id="s10">
+      <div class="sector-cover">
+        <div class="sector-cover__media adaptive-ratio-card" aria-hidden="true">
+          <img class="real-image real-image--plan" src="Slides/SETORES/02 - INTERNAÇÃO/SETOR INTERNAÇÃO_page-0001.jpg" alt="Planta baixa do setor de internação">
+        </div>
+        <aside class="sector-cover__copy">
+          <span class="feature-kicker">Setor 02</span>
+          <h3>Internação</h3>
+          <p>
+            Capa do setor de internação com planta baixa.
+            A sequência a seguir respeita a ordem: recepção e depois quarto.
+          </p>
+        </aside>
+      </div>
+      <span class="slide-no">Setor 02 / Capa</span>
+    </section>
+
+    <!-- SLIDE 12 · SETOR 02 · RECEPÇÃO -->
+    <section class="slide" data-light="true" data-title="Setor 02 · Recepção" id="s11">
+      <div class="wall wall--two-by-two" aria-label="Renders da recepção de internação">
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/02 - INTERNAÇÃO/RENDER/RECEPÇÃO/INTERNAÇÃO - RECEPÇÃO 03.png" alt="Recepção internação 03"><figcaption>Recepção internação</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/02 - INTERNAÇÃO/RENDER/RECEPÇÃO/INTERNAÇÃO - RECEPÇÃO 04.png" alt="Recepção internação 04"><figcaption>Recepção internação</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/02 - INTERNAÇÃO/RENDER/RECEPÇÃO/INTERNAÇÃO - RECEPÇÃO E CORREDOR 01.png" alt="Recepção e corredor 01"><figcaption>Recepção e corredor</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/02 - INTERNAÇÃO/RENDER/RECEPÇÃO/INTERNAÇÃO - RECEPÇÃO E CORREDOR 02.png" alt="Recepção e corredor 02"><figcaption>Recepção e corredor</figcaption></figure>
+      </div>
+      <span class="slide-no">Setor 02 / Recepção</span>
+    </section>
+
+    <!-- SLIDE 13 · SETOR 02 · QUARTO (BLOCO 01) -->
+    <section class="slide" data-light="true" data-title="Setor 02 · Quarto · Bloco 01" id="s12">
+      <div class="wall wall--two-by-two" aria-label="Primeiro bloco de renders do quarto de internação">
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/02 - INTERNAÇÃO/RENDER/QUARTO/QUARTO INTERNAÇÃO 01.png" alt="Quarto internação 01"><figcaption>Quarto internação</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/02 - INTERNAÇÃO/RENDER/QUARTO/QUARTO INTERNAÇÃO 02.png" alt="Quarto internação 02"><figcaption>Quarto internação</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/02 - INTERNAÇÃO/RENDER/QUARTO/QUARTO INTERNAÇÃO 03.png" alt="Quarto internação 03"><figcaption>Quarto internação</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/02 - INTERNAÇÃO/RENDER/QUARTO/QUARTO INTERNAÇÃO 04.png" alt="Quarto internação 04"><figcaption>Quarto internação</figcaption></figure>
+      </div>
+      <span class="slide-no">Setor 02 / Quarto Bloco 01</span>
+    </section>
+
+    <!-- SLIDE 13B · SETOR 02 · QUARTO (BLOCO 02) -->
+    <section class="slide" data-light="true" data-title="Setor 02 · Quarto · Bloco 02" id="s12b">
+      <div class="wall wall--dense" aria-label="Segundo bloco de renders do quarto de internação">
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/02 - INTERNAÇÃO/RENDER/QUARTO/QUARTO INTERNAÇÃO 06.png" alt="Quarto internação 06"><figcaption>Quarto internação</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/02 - INTERNAÇÃO/RENDER/QUARTO/QUARTO INTERNAÇÃO 07.png" alt="Quarto internação 07"><figcaption>Quarto internação</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/02 - INTERNAÇÃO/RENDER/QUARTO/QUARTO INTERNAÇÃO 08.png" alt="Quarto internação 08"><figcaption>Quarto internação</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/02 - INTERNAÇÃO/RENDER/QUARTO/QUARTO INTERNAÇÃO 09.png" alt="Quarto internação 09"><figcaption>Quarto internação</figcaption></figure>
+      </div>
+      <span class="slide-no">Setor 02 / Quarto Bloco 02</span>
+    </section>
+
+    <!-- SLIDES DE CAPA DOS DEMAIS SETORES -->
+    <section class="slide slide--plan-cover" data-light="true" data-title="Setor 03 · Consultórios" id="s13">
+      <div class="sector-cover">
+        <div class="sector-cover__media adaptive-ratio-card" aria-hidden="true">
+          <img class="real-image real-image--plan" src="Slides/SETORES/03 - CONSULTÓRIOS/CONSULTÓRIOS_page-0001.jpg.jpeg" alt="Planta baixa do setor consultórios">
+        </div>
+        <aside class="sector-cover__copy">
+          <span class="feature-kicker">Setor 03</span>
+          <h3>Consultórios</h3>
+          <p>
+            Capa do setor com planta baixa e abertura da sequência de recepção e consultório.
+          </p>
+        </aside>
+      </div>
+      <span class="slide-no">Setor 03 / Capa</span>
+    </section>
+
+    <section class="slide" data-light="true" data-title="Setor 03 · Recepção" id="s13a">
+      <div class="wall" aria-label="Renders da recepção dos consultórios">
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/03 - CONSULTÓRIOS/RECEPÇÃO/RECEPÇÃO - CONSULTÓRIOS 01.png" alt="Recepção consultórios 01"><figcaption>Recepção consultórios</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/03 - CONSULTÓRIOS/RECEPÇÃO/RECEPÇÃO - CONSULTÓRIOS 02.png" alt="Recepção consultórios 02"><figcaption>Recepção consultórios</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/03 - CONSULTÓRIOS/RECEPÇÃO/RECEPÇÃO - CONSULTÓRIOS 03.png" alt="Recepção consultórios 03"><figcaption>Recepção consultórios</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/03 - CONSULTÓRIOS/RECEPÇÃO/RECEPÇÃO - CONSULTÓRIOS 04.png" alt="Recepção consultórios 04"><figcaption>Recepção consultórios</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/03 - CONSULTÓRIOS/RECEPÇÃO/RECEPÇÃO - CONSULTÓRIOS 05.png" alt="Recepção consultórios 05"><figcaption>Recepção consultórios</figcaption></figure>
+      </div>
+      <span class="slide-no">Setor 03 / Recepção</span>
+    </section>
+
+    <section class="slide" data-light="true" data-title="Setor 03 · Consultório" id="s13b">
+      <div class="wall" aria-label="Renders do consultório">
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/03 - CONSULTÓRIOS/CONSULTÓRIO/CONSULTÓRIO 01.png" alt="Consultório 01"><figcaption>Consultório</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/03 - CONSULTÓRIOS/CONSULTÓRIO/CONSULTÓRIO 02.png" alt="Consultório 02"><figcaption>Consultório</figcaption></figure>
+        <figure class="wall-item"><img class="real-image" src="Slides/SETORES/03 - CONSULTÓRIOS/CONSULTÓRIO/CONSULTÓRIO 03.png" alt="Consultório 03"><figcaption>Consultório</figcaption></figure>
+      </div>
+      <span class="slide-no">Setor 03 / Consultório</span>
+    </section>
+
+    <section class="slide slide--plan-cover" data-light="true" data-title="Setor 04 · Lactário" id="s14">
+      <div class="sector-cover">
+        <div class="sector-cover__media adaptive-ratio-card" aria-hidden="true">
+          <img class="real-image real-image--plan" src="Slides/SETORES/04 - LACTÁRIO/SETOR LACTÁRIO_page-0001.jpg" alt="Planta baixa do setor lactário">
+        </div>
+        <aside class="sector-cover__copy">
+          <span class="feature-kicker">Setor 04</span>
+          <h3>Lactário</h3>
+          <p>
+            Capa do setor com planta baixa e espaço reservado para renders quando forem adicionados.
+          </p>
+        </aside>
+      </div>
+      <span class="slide-no">Setor 04 / Capa</span>
+    </section>
+
+    <section class="slide slide--plan-cover" data-light="true" data-title="Setor 05 · Administrativo" id="s15">
+      <div class="sector-cover">
+        <div class="sector-cover__media adaptive-ratio-card" aria-hidden="true">
+          <img class="real-image real-image--plan" src="Slides/SETORES/05 - ADMINISTRATIVO/SETOR ADMINISTRATIVO_page-0001.jpg" alt="Planta baixa do setor administrativo">
+        </div>
+        <aside class="sector-cover__copy">
+          <span class="feature-kicker">Setor 05</span>
+          <h3>Administrativo</h3>
+          <p>
+            Capa do setor posicionada conforme a ordem de apresentação enviada.
+          </p>
+        </aside>
+      </div>
+      <span class="slide-no">Setor 05 / Capa</span>
+    </section>
+
+    <section class="slide slide--plan-cover" data-light="true" data-title="Setor 06 · Centro Obstétrico" id="s16">
+      <div class="sector-cover">
+        <div class="sector-cover__media adaptive-ratio-card" aria-hidden="true">
+          <img class="real-image real-image--plan" src="Slides/SETORES/06 - CENTRO OBSTÉTRICO/SETOR CENTRO OBSTÉTRICO_page-0001.jpg" alt="Planta baixa do setor centro obstétrico">
+        </div>
+        <aside class="sector-cover__copy">
+          <span class="feature-kicker">Setor 06</span>
+          <h3>Centro obstétrico</h3>
+          <p>
+            Capa do setor com planta baixa, pronta para receber sequência de ambientes.
+          </p>
+        </aside>
+      </div>
+      <span class="slide-no">Setor 06 / Capa</span>
+    </section>
+
+    <section class="slide slide--plan-cover" data-light="true" data-title="Setor 07 · Serviço" id="s17">
+      <div class="sector-cover">
+        <div class="sector-cover__media adaptive-ratio-card" aria-hidden="true">
+          <img class="real-image real-image--plan" src="Slides/SETORES/07 - SERVIÇO/SETOR SERVIÇO_page-0001.jpg" alt="Planta baixa do setor serviço">
+        </div>
+        <aside class="sector-cover__copy">
+          <span class="feature-kicker">Setor 07</span>
+          <h3>Serviço</h3>
+          <p>
+            Capa final dos setores disponíveis na pasta atual.
+          </p>
+        </aside>
+      </div>
+      <span class="slide-no">Setor 07 / Capa</span>
+    </section>
+
+  </main>
+
+  <div id="lightbox" aria-hidden="true">
+    <div id="lightbox-backdrop"></div>
+    <div id="lightbox-panel" role="dialog" aria-modal="true" aria-label="Visualizador de imagem">
+      <div id="lightbox-toolbar">
+        <div id="lightbox-meta"></div>
+        <button id="lightbox-close" type="button">Fechar</button>
+      </div>
+      <div id="lightbox-stage">
+        <button id="lightbox-prev" class="lightbox-nav" type="button" aria-label="Imagem anterior" hidden>
+          <span aria-hidden="true">&#8249;</span>
+        </button>
+        <div id="lightbox-stage-inner">
+          <img id="lightbox-image" src="" alt="">
+        </div>
+        <button id="lightbox-next" class="lightbox-nav" type="button" aria-label="Próxima imagem" hidden>
+          <span aria-hidden="true">&#8250;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var cards = document.querySelectorAll('.adaptive-ratio-card');
+
+      cards.forEach(function (card) {
+        var img = card.querySelector('img');
+        if (!img) {
+          return;
+        }
+
+        var applyRatio = function () {
+          if (!img.naturalWidth || !img.naturalHeight) {
+            return;
+          }
+          card.style.setProperty('--img-ratio', String(img.naturalWidth / img.naturalHeight));
+        };
+
+        if (img.complete) {
+          applyRatio();
+        } else {
+          img.addEventListener('load', applyRatio, { once: true });
+        }
+      });
+    })();
+
+    (function () {
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var lightboxImage = document.getElementById('lightbox-image');
+      if (!lightboxImage || prefersReducedMotion) {
+        return;
+      }
+
+      document.addEventListener('click', function (event) {
+        var image = event.target.closest('img');
+        if (!image) {
+          return;
+        }
+
+        image.classList.remove('is-opening-image');
+        window.requestAnimationFrame(function () {
+          image.classList.add('is-opening-image');
+          window.setTimeout(function () {
+            image.classList.remove('is-opening-image');
+          }, 280);
+        });
+      });
+
+      var observer = new MutationObserver(function (mutations) {
+        var changedSource = mutations.some(function (mutation) {
+          return mutation.type === 'attributes' && mutation.attributeName === 'src';
+        });
+
+        if (!changedSource || !lightboxImage.getAttribute('src')) {
+          return;
+        }
+
+        lightboxImage.classList.add('is-swapping');
+        window.setTimeout(function () {
+          lightboxImage.classList.remove('is-swapping');
+        }, 90);
+      });
+
+      observer.observe(lightboxImage, { attributes: true, attributeFilter: ['src'] });
+    })();
+  </script>
+  <script src="../Portfolio/assets/js/main.js"></script>
+</body>
+</html>
