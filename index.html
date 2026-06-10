@@ -169,7 +169,20 @@
       border-radius: 16px;
       background: rgba(250, 248, 245, 0.86);
       box-shadow: 0 18px 44px rgba(28, 21, 16, 0.10);
+      width: var(--copy-width, 86%);
+      max-width: 44rem;
+      justify-self: start;
     }
+
+    #s5 .sector-cover__copy { --copy-width: 86%; }
+    #s6 .sector-cover__copy { --copy-width: 92%; }
+    #s8 .sector-cover__copy { --copy-width: 90%; }
+    #s10 .sector-cover__copy { --copy-width: 84%; }
+    #s13 .sector-cover__copy { --copy-width: 87%; }
+    #s14 .sector-cover__copy { --copy-width: 84%; }
+    #s15 .sector-cover__copy { --copy-width: 92%; }
+    #s16 .sector-cover__copy { --copy-width: 88%; }
+    #s17 .sector-cover__copy { --copy-width: 84%; }
 
     .slide--plan-cover .sector-cover__copy h3 {
       font-size: clamp(1.05rem, 1.8vw, 1.9rem);
